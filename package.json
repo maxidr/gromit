@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "webpack-dev-server --colors",
+    "build": "webpack",
     "//": "node composition | faucet",
     "test": "karma start"
   },

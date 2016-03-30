@@ -28,8 +28,14 @@ body {
   filter: blur(5px);
 }
 
-.overlay {
-
+.overlay.active {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: black;
+  z-index: 3;
+  position: fixed;
+  opacity: 0.3;
 }
 
 #main {
@@ -89,7 +95,6 @@ body {
 
 .first-screen {
   height: 100vh;
-  display: table;
   margin: 0 auto;
   white-space: nowrap;
 }
@@ -217,6 +222,26 @@ dd {
 .json-response p { margin-left: 1em; }
 .json-response p.level1 { margin-left: 2.5em; }
 
+
+#app-container {
+  white-space: nowrap;
+  z-index: 3;
+  position: fixed;
+  margin: 0 auto;
+  width: 100%;
+  top:0; left: 0;
+  /*
+  height: 100vh;
+  margin: 0 auto;
+  top: 0; left: 0;
+  width: auto;
+  */
+}
+
+
+
+
+
 @media only screen and (max-width: 400px) {
   .content-primary {
     min-width: 320px;
@@ -258,7 +283,5 @@ dd {
     max-width: 320px;
 
   }
-
-
 
 }

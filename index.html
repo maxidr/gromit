@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700" type="text/css">
     <link rel="stylesheet" href="icomoon/style.css" type="text/css">
-    <link rel="stylesheet" href="index.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="css/index.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="css/app.css" media="screen" title="no title" charset="utf-8">
 
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
+
     <script>
 
       function initialize(){
@@ -36,6 +38,8 @@
 
     <div class="overlay"></div>
 
+    <div id="app-container" class="fadeInDown animated"></div>
+
     <div id="main">
 
       <!--
@@ -51,8 +55,8 @@
             Gromit<b>.io</b>
           </div>
           <ul class="menu">
-            <li><a href="#/login">login</a></li>
-            <li><a href="#/register">register</a></li>
+            <li><a href="?#/login">login</a></li>
+            <li><a href="?#/register">register</a></li>
           </ul>
         </div>
       </header>
@@ -128,6 +132,9 @@
       <div id="googlemaps"></div>
     </div>
 
+
+
+    <script type="text/javascript" src="dist/bundle.js"></script>
 
   </body>
 </html>

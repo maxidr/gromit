@@ -3,43 +3,41 @@ const inlineErrors = require('../lib/inlineErrorView')
 const constraints = require('../lib/promisedValidator')
 const pipe = require('ramda/src/pipeP')
 const backend = require('./backend/users')
+const closeBtn = require('./closeBtn')
 
 const validate = constraints((user, errors) => {
   if( ! user.email() ){ errors('email', 'The email is required') }
   if( ! user.password() ){ errors('password', 'The password is required') }
 })
 
-const successView = (email) => m('.success-register', [
+const successView = (email) => m('.success-register.content', [
+  closeBtn,
   m('h1', 'Perfect, we could reset your password!'),
   m('h2', 'In short you will receive an email in your account (' + email + ') with the next steps to access to your dashboard'),
-  m("a[href='/login']", { config: m.route }, 'Go back to the login page')
+  m("a[href='/login'].btn", { config: m.route }, 'Go back to the login page')
 ])
 
-const formView = (ctrl) => m('.forgot-password', [
+const formView = (ctrl) => m('.forgot-password.content', [
+  closeBtn,
   m('h1', 'Forgot Password'),
   ctrl.errors('service'),
   m('form', { onsubmit: ctrl.submit }, [
     m('.field',[
       m('label', 'Email'),
-      m('input[type=email]', {
-        onchange: m.withAttr('value', ctrl.user.email),
-        placeholder: 'Enter your email' }),
+      m('input[type=email]', { onchange: m.withAttr('value', ctrl.user.email) }),
       ctrl.errors('email')
     ]),
     m('.field',[
       m('label', 'New password'),
-      m('input[type=password]', {
-        onchange: m.withAttr('value', ctrl.user.password),
-        placeholder: 'Enter a new password'
-      }),
+      m('input[type=password]', { onchange: m.withAttr('value', ctrl.user.password) }),
       ctrl.errors('password')
     ]),
     m('.field',[
       m('button[type=submit]', 'Reset my password')
     ]),
     m('.more', [
-      m('a.login', { href: '#/login' }, 'I remember my password now'),
-      m('a.register', { href: '#/register' }, "you don't have an user yet?")
+      m('.field', m('a.login', { href: '#/login' }, 'I remember my password now')),
+      m('.field', m('a.register', { href: '#/register' }, "you don't have an user yet?"))
     ])
   ]),
 

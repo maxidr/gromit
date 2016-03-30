@@ -3,6 +3,7 @@ const constraints = require('../lib/promisedValidator')
 const inlineErrors = require('../lib/inlineErrorView')
 const pipe = require('ramda/src/pipeP')
 const backend = require('./backend/users')
+const closeBtn = require('./closeBtn')
 
 const validate = constraints((user, errors) => {
   if( ! user.email() ){ errors('email', 'The email is required') }
@@ -48,14 +49,15 @@ register.controller = function(){
 }
 
 const successView = (email) => m('.success-register', [
+  closeBtn,
   m('h1', 'Perfect, now you are registered!'),
   m('h2', 'In short you will receive an email in your account (' + email + ') with the next steps to access to your dashboard'),
   m("a[href='/login']", { config: m.route }, 'Go back to the login page')
 ])
 
-const formView = (ctrl) => m('.register', [
+const formView = (ctrl) => m('.register.content', [
+  closeBtn,
   m('h1', 'Register'),
-
   m('.service-errors', ctrl.errors('service')),
   m('form', { onsubmit: ctrl.submit }, [
     m('.field',[

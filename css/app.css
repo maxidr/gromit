@@ -1,0 +1,225 @@
+* {
+  margin: 0; padding: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+html, body{ height: 100%; }
+a { cursor: pointer; text-decoration: none; color: inherit; }
+body {
+  position: relative;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 1;
+  font-family: 'Montserrat', Helvetica, sans-serif;
+  font-weight: 400;
+  line-height: 2;
+  background-color: white;
+  color: #404040;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-overflow-scrolling: touch;
+  min-width: 400px;
+}
+
+#app-container > .content.success-register {
+  padding-bottom: 50px;
+  width: 600px;
+}
+
+#app-container > .content {
+  margin-top: 15vh;
+  display: inline-block;
+  vertical-align: middle;
+  background: white;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.50);
+  -moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.50);
+  box-shadow:         0px 0px 10px 0px rgba(50, 50, 50, 0.50);
+  /*padding: 20px 50px;*/
+  min-width: 500px;
+  padding: 15px 20px;
+  white-space: normal;
+}
+
+#app-container > .fullscreen-content {
+  height: 100vh;
+  width: 100%;
+  background: white;
+}
+
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+button {
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: none;
+  background: #FC2940;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  display: block;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 auto;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.close {
+  text-align: right;
+
+}
+
+.close > a {
+  font-size: 16px;
+  color: white;
+  background: #FC2940;
+  border-radius: 50%;
+  padding: 4px;
+  font-weight: bold;
+}
+
+button:hover { background: #D80D24; }
+
+.field {
+  margin-bottom: 15px;
+}
+
+.error {
+  font-size: 0.8em;
+  font-weight: 100;
+  color: #FC2940;
+  text-align: left;
+}
+
+*:focus {
+  outline: none;
+}
+
+form {
+  /* margin: 0 auto; */
+  margin: 0 40px;
+  /* padding: 0 40px; */
+}
+
+label {
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  text-align: left;
+}
+
+input {
+  display: block;
+  width: 100%;
+  border: 1px solid #CCCCCC;
+  padding: 10px;
+  font-size: 1.4em;
+  font-weight: 100;
+  border-radius: 4px;
+}
+
+.service-errors {
+  display: inline;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.service-errors > .error { text-align: center; }
+
+.more { margin: 35px 0 15px 0; font-size: 0.8em; color: #7B7B7B; }
+/* .more a:first-of-type { margin-right: 10px; } */
+
+.more a {
+  text-transform: uppercase;
+  padding: 10px 5px; line-height: 1em;
+  display: inline-block;
+  border-bottom: 5px solid transparent;
+}
+.more a:hover {
+  border-bottom: 5px solid #FC2940;
+  color: black;
+}
+
+
+
+.success-register h2 {
+  margin: 0 auto;
+  font-size: 1.2em;
+  font-weight: 300;
+  margin-top: 40px;
+  margin-bottom: 50px;
+  padding: 0 25px;
+}
+
+.success-register .btn {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 35px;
+  font-size: 0.9em;
+  font-weight: 100;
+
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: none;
+  background: #FC2940;
+  color: white;
+
+  text-transform: uppercase;
+  font-weight: 600;
+  width: 20em;
+}
+
+#app-container > .content.register {
+  padding-bottom: 50px;
+}
+
+/* ------------------------------------------------------------------------------------------ */
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}

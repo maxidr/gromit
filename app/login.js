@@ -3,6 +3,7 @@ const constraints = require('../lib/promisedValidator')
 const inlineErrors = require('../lib/inlineErrorView')
 const pipe = require('ramda/src/pipeP')
 const backend = require('./backend/users')
+const closeBtn = require('./closeBtn')
 
 const validate = constraints((user, errors) => {
   if( ! user.email() ){ errors('email', 'The email is required') }
@@ -28,14 +29,15 @@ login.controller = () => {
     resolveErrors[errors.type](errors)
   }
 
-  const routeToHome = () => m.route('/')
+  const routeToDashboard = () => m.route('/dashboard')
 
-  ctrl.submit = () => pipe(validate, backend.login, routeToHome)(ctrl.user).catch(handleErrors)
+  ctrl.submit = () => pipe(validate, backend.login, routeToDashboard)(ctrl.user).catch(handleErrors)
 
   return ctrl
 }
 
 login.view = (ctrl) => m('.login.content', [
+  closeBtn,
   m('h1', 'Login to your account'),
   m('.service-errors', ctrl.errors('service')),
   m('form', { onsubmit: ctrl.submit }, [
@@ -53,8 +55,12 @@ login.view = (ctrl) => m('.login.content', [
       m('button[type=submit]', 'Login')
     ]),
     m('.more', [
-      m('a.forgot-password', { href: '#/forgot-password' }, 'Forgot your password?'),
-      m('a.register', { href: '#/register' }, "you don't have an user yet?")
+      m('.field',
+        m('a.forgot-password', { href: '#/forgot-password' }, 'Forgot your password?')
+      ),
+      m('.field',
+        m('a.register', { href: '#/register' }, "you don't have an user yet?")
+      )
     ])
   ])
 ])
