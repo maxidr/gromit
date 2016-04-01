@@ -39,11 +39,11 @@ register.controller = function(){
     }
   }
 
-  ctrl.submit = () => pipe(
-    validate,
-    backend.register,
-    ctrl.showSuccessMsg.bind(null, true))(ctrl.user)
-    .catch(handleErrors)
+  ctrl.submit = () => {
+    pipe(validate, backend.register, ctrl.showSuccessMsg.bind(null, true))(ctrl.user)
+      .catch(handleErrors)
+    return false
+  }
 
   return ctrl
 }

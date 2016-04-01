@@ -61,12 +61,16 @@ forgotPassword.controller = () => {
   ctrl.showSuccessMsg = m.prop(false);
   ctrl.errors = inlineErrors()
 
-  ctrl.submit = () => pipe(validate,
-    backend.resetPassword,
-    ctrl.showSuccessMsg.bind(null, true)
-  )(ctrl.user).catch(handleErrors)
+  ctrl.submit = () => {
+    pipe(validate,
+      backend.resetPassword,
+      ctrl.showSuccessMsg.bind(null, true)
+    )(ctrl.user).catch(handleErrors)
 
-  return ctrl;
+    return false
+  }
+
+  return ctrl
 }
 
 forgotPassword.view = (ctrl) => ctrl.showSuccessMsg() ? successView(ctrl.user.email()) : formView(ctrl)

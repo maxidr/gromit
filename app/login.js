@@ -4,6 +4,7 @@ const inlineErrors = require('../lib/inlineErrorView')
 const pipe = require('ramda/src/pipeP')
 const backend = require('./backend/users')
 const closeBtn = require('./closeBtn')
+const session = require('../lib/session')
 
 const validate = constraints((user, errors) => {
   if( ! user.email() ){ errors('email', 'The email is required') }
@@ -29,9 +30,17 @@ login.controller = () => {
     resolveErrors[errors.type](errors)
   }
 
+  function saveTokenOnSession(response){
+    session({ token: response.token })
+    return response
+  }
+
   const routeToDashboard = () => m.route('/dashboard')
 
-  ctrl.submit = () => pipe(validate, backend.login, routeToDashboard)(ctrl.user).catch(handleErrors)
+  ctrl.submit = () => {
+    pipe(validate, backend.login, saveTokenOnSession, routeToDashboard)(ctrl.user).catch(handleErrors)
+    return false
+  }
 
   return ctrl
 }
@@ -56,10 +65,10 @@ login.view = (ctrl) => m('.login.content', [
     ]),
     m('.more', [
       m('.field',
-        m('a.forgot-password', { href: '#/forgot-password' }, 'Forgot your password?')
+        m("a.forgot-password[href='/forgot-password']", { config: m.route }, 'Forgot your password?')
       ),
       m('.field',
-        m('a.register', { href: '#/register' }, "you don't have an user yet?")
+        m('a.register[href="/register"]', { config: m.route }, "you don't have an user yet?")
       )
     ])
   ])
