@@ -4,7 +4,7 @@ server.autoRespond = true;
 //server.autoRespondAfter = 3000;
 
 //let backendUrl = 'https://app.gromit.io/api';
-let backendUrl = '';
+let backendUrl = 'http://localhost';
 
 function logObj(obj, defaultResponse){
   if( ! obj ) return defaultResponse || ''
@@ -14,9 +14,9 @@ function logObj(obj, defaultResponse){
 function proxy(type, endpoint, handler){
   console.log('fake ' + type + ' ' + backendUrl + endpoint)
   //server.respondWith(type, backendUrl + endpoint, (req) => {
-  server.respondWith(type, endpoint, (req) => {
+  server.respondWith(type, backendUrl + endpoint, (req) => {
     console.info('FAKE backend -> ' + type + ' ' + endpoint)
-    const body = JSON.parse(req.requestBody);
+    const body = req.requestBody ? JSON.parse(req.requestBody) : null
     handler(body, jsonResponse(req), req)
   })
 }
@@ -76,13 +76,12 @@ proxy('POST', '/users/reset', (user, response) => {
     response.error(404, 'Not found', 'email was not found')
   }
 })
-/*
-proxy('OPTIONS', '/users/current', (user, response) => {
+
+proxy('DELETE', '/users/current', (user, response) => {
   response(201)
 })
-*/
 
-proxy('GET', /\/users\/current/, (user, response) => {
+proxy('GET', '/users/current', (user, response) => {
   console.log('OOK')
   response(200, { userId: 'xx',
     createdTime: 1430245398014,

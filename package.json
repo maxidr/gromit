@@ -40,6 +40,7 @@
     "webpack-dev-server": "1.14.1"
   },
   "dependencies": {
+    "json-formatter-js": "0.3.0",
     "m-validator": "1.0.0",
     "mithril": "0.2.3",
     "mithril-validator": "1.1.0",
