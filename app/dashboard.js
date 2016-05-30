@@ -4,8 +4,8 @@ const spinner = require('../ui/spinner')
 require('../css/dashboard.css')
 //const JSONFormatter = require('json-formatter-js/src/index.js')
 //const JSONFormatter = require('json-formatter-js')
-import JSONFormatter from 'json-formatter-js'
-require('json-formatter-js/dist/style.css')
+//import JSONFormatter from 'json-formatter-js'
+//require('json-formatter-js/dist/style.css')
 
 const dashboard = {}
 

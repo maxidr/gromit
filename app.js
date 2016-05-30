@@ -1,5 +1,11 @@
 const m = require('mithril')
 //require('./index.css')
+
+var css = require('./css/app.css')
+
+// Landing page style. See: http://maps.stamen.com/
+require('./app/tile.stamen')
+
 import session from './lib/session'
 import login from './app/login.js'
 import forgotPassword from './app/forgotPassword.js'
@@ -23,7 +29,7 @@ function redirectIfAlreadyLogedIn(component){
   return {
     controller: function(){
       if( (session() || {}).token ){ return m.route('/dashboard') }
-      return new (component.controller || noop)(arguments)
+      return component.controller ? new component.controller(arguments) : null
     },
     view: component.view
   }
@@ -43,4 +49,4 @@ function secure(component){
 
 function view(){ return '' }
 
-// require('./mock/api');
+//require('./mock/api');

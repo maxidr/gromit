@@ -3,13 +3,14 @@ const merge = require('ramda/src/merge')
 const session = require('../../lib/session')
 
 
-const serverUrl = 'https://app.gromit.io/api'
+const serverUrl = 'https://app.gromit.io'
 //const serverUrl = 'http://localhost'
 
 const unwrapError = (response, xhr) => ({ type: 'service', code: xhr.status, error: response })
 
 function addAuthorization(xhr){
   if( session() && session().token ){ xhr.setRequestHeader('Authorization', 'Bearer ' + session().token) }
+  //xhr.setRequestHeader('Content-Type', 'application/json')
 }
 
 const request = (method, path, more) => m.request(

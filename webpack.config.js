@@ -1,4 +1,9 @@
 var path = require('path');
+var webpack = require('webpack')
+
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
+var autoprefixer = require('autoprefixer')
+var postcssImport = require('postcss-import')
 
 module.exports = {
   entry: "./app.js",
@@ -20,7 +25,8 @@ module.exports = {
         loader: 'babel'
       },{
         test: /\.css$/,
-        loader: "style-loader!css-loader!postcss-loader"
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+        //loader: ExtractTextPlugin"style-loader!css-loader!postcss-loader"
       },{
         test: /sinon\/pkg\/sinon\.js/,
         loader: 'imports?define=>false,require=>false'
@@ -28,8 +34,15 @@ module.exports = {
     ]
   },
   postcss: function () {
-    return [require('autoprefixer')];
+    return [
+      autoprefixer,
+      postcssImport({ addDependencyTo: webpack })
+    ];
   },
+
+  plugins: [
+    new ExtractTextPlugin('styles.css', { allChunks: true })
+  ],
 
   node : { fs: 'empty' }
 };

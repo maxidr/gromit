@@ -34,7 +34,7 @@ function jsonResponse(req){
 
 function ensureToken(next){
   return function(body, res, req){
-    req.headers
+    //req.headers
     return next(body, res, req)
   }
 }

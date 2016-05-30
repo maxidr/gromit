@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'icomoon';
-    src:    url('fonts/icomoon.eot?fny24b');
-    src:    url('fonts/icomoon.eot?fny24b#iefix') format('embedded-opentype'),
-        url('fonts/icomoon.ttf?fny24b') format('truetype'),
-        url('fonts/icomoon.woff?fny24b') format('woff'),
-        url('fonts/icomoon.svg?fny24b#icomoon') format('svg');
+    src:    url('/icomoon/fonts/icomoon.eot?fny24b');
+    src:    url('/icomoon/fonts/icomoon.eot?fny24b#iefix') format('embedded-opentype'),
+        url('/icomoon/fonts/icomoon.ttf?fny24b') format('truetype'),
+        url('/icomoon/fonts/icomoon.woff?fny24b') format('woff'),
+        url('/icomoon/fonts/icomoon.svg?fny24b#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -84,4 +84,3 @@
 .icon-opera:before {
     content: "\e918";
 }
-
