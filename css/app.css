@@ -1,8 +1,18 @@
-@import '../icomoon/style.css';
+
 @import './dashboard.css';
 @import './index.css';
 @import './spinner.css';
 
+/*
+@font-face {
+    font-family: 'icomoon';
+    src: url('iconmoon/fonts/icomoon.eot');
+    src: url('iconmoon/fonts/icomoon.ttf') format('truetype');
+    src: url('iconmoon/fonts/icomoon.woff') format('woff');
+    src: url('iconmoon/fonts/icomoon.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}*/
 
 * {
   margin: 0; padding: 0;

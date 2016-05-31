@@ -1,0 +1,3 @@
+- [ ] Add deployer script on package.json to run the production deployment throught npm
+- [ ] Dashboard page is not working outside the mock
+- [ ] Remove the mock (or replace it)

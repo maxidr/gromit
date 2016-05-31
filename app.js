@@ -1,6 +1,6 @@
 const m = require('mithril')
 //require('./index.css')
-
+var icons = require('./css/icons.css')
 var css = require('./css/app.css')
 
 // Landing page style. See: http://maps.stamen.com/
