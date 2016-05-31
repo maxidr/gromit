@@ -143,7 +143,7 @@ dt::after {
   top: 1px;
 }
 
-dt.country::after { content: "\e902"; }
+dt.country::after { content: "\e906"; }
 dt.timezone::after { content: "\e907"; }
 dt.useragent::after { content: "\e913"; }
 dt.os::after { content: "\e90f"; }
