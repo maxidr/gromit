@@ -48,7 +48,7 @@ register.controller = function(){
   return ctrl
 }
 
-const successView = (email) => m('.success-register', [
+const successView = (email) => m('.success-register.content', [
   closeBtn,
   m('h1', 'Perfect, now you are registered!'),
   m('h2', 'In short you will receive an email in your account (' + email + ') with the next steps to access to your dashboard'),

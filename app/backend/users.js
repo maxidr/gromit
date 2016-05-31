@@ -20,12 +20,12 @@ const request = (method, path, more) => m.request(
 )
 
 const authRequest = (method, path, more) => request(method, path, merge({ config: addAuthorization }, more))
-const emailAndPassword = (user) => ({ data: { username: user.email(), password: user.password() }})
+const usernameAndPassword = (user) => ({ data: { username: user.email(), password: user.password() }})
 
 const users = {};
-users.login         = (user) => request('POST', '/users/token', emailAndPassword(user))
-users.register      = (user) => request('POST', '/users/signUp', emailAndPassword(user))
-users.resetPassword = (user) => request('POST', '/users/reset', emailAndPassword(user))
+users.login         = (user) => request('POST', '/users/token', usernameAndPassword(user))
+users.register      = (user) => request('POST', '/users/signUp', { data: { email: user.email(), password: user.password() }})
+users.resetPassword = (user) => request('POST', '/users/reset', usernameAndPassword(user))
 users.logout        = (user) => request('DELETE', '/users/current')
 users.fetch         = () => {
   console.log('fetch user')
