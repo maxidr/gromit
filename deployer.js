@@ -3,8 +3,8 @@ var s3 = require('s3');
 var client = s3.createClient({
   /*
   s3Options: {
-    accessKeyId: "AKIAIESG5CWLX7PHPWPQ",
-    secretAccessKey: "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",
+    accessKeyId: "...",
+    secretAccessKey: "...",
     // any other options are passed to new AWS.S3()
     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
   },

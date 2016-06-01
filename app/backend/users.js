@@ -2,15 +2,12 @@ const m = require('mithril')
 const merge = require('ramda/src/merge')
 const session = require('../../lib/session')
 
-
 const serverUrl = 'https://app.gromit.io'
-//const serverUrl = 'http://localhost'
 
 const unwrapError = (response, xhr) => ({ type: 'service', code: xhr.status, error: response })
 
 function addAuthorization(xhr){
   if( session() && session().token ){ xhr.setRequestHeader('Authorization', 'Bearer ' + session().token) }
-  //xhr.setRequestHeader('Content-Type', 'application/json')
 }
 
 const request = (method, path, more) => m.request(
@@ -22,7 +19,8 @@ const request = (method, path, more) => m.request(
 const authRequest = (method, path, more) => request(method, path, merge({ config: addAuthorization }, more))
 const usernameAndPassword = (user) => ({ data: { username: user.email(), password: user.password() }})
 
-const users = {};
+const users = module.exports = {}
+
 users.login         = (user) => request('POST', '/users/token', usernameAndPassword(user))
 users.register      = (user) => request('POST', '/users/signUp', { data: { email: user.email(), password: user.password() }})
 users.resetPassword = (user) => request('POST', '/users/reset', usernameAndPassword(user))
@@ -52,5 +50,3 @@ users.fetch         = () => {
   return deferred.promise;
 */
 }
-
-module.exports = users
