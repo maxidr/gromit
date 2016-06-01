@@ -12,9 +12,11 @@ const dashboard = {}
 dashboard.controller = function() {
   const ctrl = this
   ctrl.user = m.prop()
+  m.startComputation();
   user.fetch().then(function(user){
     console.log('user: ' + user)
     ctrl.user(user)
+    m.endComputation();
   })
 }
 
@@ -30,13 +32,13 @@ function renderJSON(element, initialize){
 */
 
 // FROM http://markup.su/highlighter/
-function jqueryExample(){
+function jqueryExample(key){
   return m('.jquery-example', [
     m.trust('<pre style="background:#0c1021;color:#f8f8f8">' +
             '<span style="color:#fbde2d">$</span>.get(<span style="color:#61ce3c">' +
-            'https://zpevg.gromit.io/api' + '</span>).then(<span style="color:#fbde2d">function</span>(response){' +
+            '"https://' + key + '.gromit.io/api"' + '</span>).then(<span style="color:#fbde2d">function</span>(response){' +
             "<span style='display: block; padding-left: 2em;'>" +
-            '<span style="color:#ff6400;">console</span><span style="color:#8da6ce">.log</span>(response.<span style="color:#8da6ce">location</span>.country.<span style="color:#8da6ce">name</span>)' +
+            '<span style="color:#ff6400;">console</span><span style="color:#8da6ce">.log</span>(response.<span style="color:#8da6ce">location</span>)' +
             '</span>' +
             "<span style='display: block'>})</span>" +
             "</pre>"),
@@ -86,7 +88,12 @@ const renderInfo = (user) => [
       m('li', [ m('.label', 'Endpoint'), m('.value', 'https://' + user.projectKey + '.gromit.io/api') ])
     ),
     m('.examples', [
-      jqueryExample()
+      jqueryExample(user.projectKey)
+    ]),
+    m('form', { action: 'https://jsbin.com?js,console', method: 'POST', target: '_blank' }, [
+      m('input[type=hidden]', { name: 'javascript', value: '$.get("https://xpdkg.gromit.io/api").then(function(response){\n\tconsole.log(response.location)\n})' }),
+      m('input[type=hidden]', { name: 'html', value: '<!DOCTYPE html>\n<html>\n<head>\n<script src="https://code.jquery.com/jquery-2.1.4.js"></script>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width">\n<title>JS Bin</title>\n</head>\n<body>\n</body>\n</html>' }),
+      m('button[type=submit].btn', 'Show in JSBin')
     ])
   ])
 ]

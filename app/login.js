@@ -61,7 +61,7 @@ login.view = (ctrl) => m('.login.content', [
       ctrl.errors('password')
     ]),
     m('.field', [
-      m('button[type=submit]', 'Login')
+      m('button[type=submit].btn.btn--large', 'Login')
     ]),
     m('.more', [
       m('.field',

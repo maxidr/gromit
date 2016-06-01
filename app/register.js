@@ -75,7 +75,7 @@ const formView = (ctrl) => m('.register.content', [
       m('input[type=password]', { onchange: m.withAttr('value', ctrl.user.retypedPassword) }),
       ctrl.errors('retypedPassword')
     ]),
-    m('button[type=submit]', 'Create my user')
+    m('button[type=submit].btn.btn--large', 'Create my user')
   ])
 ]);
 

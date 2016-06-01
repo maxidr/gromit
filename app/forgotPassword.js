@@ -33,7 +33,7 @@ const formView = (ctrl) => m('.forgot-password.content', [
       ctrl.errors('password')
     ]),
     m('.field',[
-      m('button[type=submit]', 'Reset my password')
+      m('button[type=submit].btn.btn--large', 'Reset my password')
     ]),
     m('.more', [
       m('.field', m('a.login', { href: '#/login' }, 'I remember my password now')),
