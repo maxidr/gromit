@@ -100,7 +100,7 @@ const renderInfo = (user) => [
   m('ul', [
     m('li', [ m('.label', 'Your key'), m('.value', user.projectKey) ]),
     m('li', [ m('.label', 'Plan'), m('.value', [
-      user.plan, m('a.upgrade-plan', 'Upgrade your plan') ])
+      user.plan ])//, m('a.upgrade-plan', 'Upgrade your plan') ])
     ]),
     m('li', [ m('.label', 'Already used'), m('.value', formatNumber(user.usages, '.')) ])
   ]),
