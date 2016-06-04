@@ -49,3 +49,29 @@ ul li .value { font-weight: 600; display: inline; }
     padding: 10px 20px;
     border-radius: 4px;
 }
+
+.copy-to-clipboard {
+  margin-left: 20px;
+  color: #BDBDBD;
+  font-size: 13px;
+  display: inline-block;
+  text-align: right;
+  transition: color 0.5s ease;
+}
+
+.copy-to-clipboard:hover {
+  transition: color 0.5s ease;
+  color: #4C4C4C;
+}
+
+
+.pulsate {
+    animation: pulsate 1s ease-out;
+    animation-iteration-count: infinite;
+    opacity: 0.5;
+}
+@keyframes pulsate {
+    0% { opacity: 0.5; }
+    50% { opacity: 1.0; }
+    100% { opacity: 0.5; }
+}

@@ -1,6 +1,9 @@
 import m from 'mithril';
 const user = require('./backend/users')
+const session = require('../lib/session')
 const spinner = require('../ui/spinner')
+const Clipboard = require('clipboard')
+
 require('../css/dashboard.css')
 //const JSONFormatter = require('json-formatter-js/src/index.js')
 //const JSONFormatter = require('json-formatter-js')
@@ -9,14 +12,33 @@ require('../css/dashboard.css')
 
 const dashboard = {}
 
+const copyToClipboardClicked = (() => {
+  let copyToClipboardClicked = false;
+
+  return (...args) => {
+    if( args.length === 0 ){ return copyToClipboardClicked }
+    copyToClipboardClicked = args[0];
+    if( copyToClipboardClicked ){
+      setTimeout(() => {
+        copyToClipboardClicked = false; m.redraw()
+      }, 3000)
+    }
+  }
+})()
+
 dashboard.controller = function() {
   const ctrl = this
+
   ctrl.user = m.prop()
+
   m.startComputation();
   user.fetch().then(function(user){
-    console.log('user: ' + user)
+    console.log(user)
     ctrl.user(user)
     m.endComputation();
+  }).catch(function(){
+    session(null)
+    m.route('/');
   })
 }
 
@@ -85,13 +107,20 @@ const renderInfo = (user) => [
   m('.how-to', [
     m('h2', 'How to use your API'),
     m('ul',
-      m('li', [ m('.label', 'Endpoint'), m('.value', 'https://' + user.projectKey + '.gromit.io/api') ])
+      m('li', [
+        m('.label', 'Endpoint'),
+        m('.value', 'https://' + user.projectKey + '.gromit.io/api'),
+        m('a.copy-to-clipboard', {
+            'data-clipboard-text': 'https://' + user.projectKey + '.gromit.io/api',
+             class: (copyToClipboardClicked() ? 'pulsate' : '') },
+          copyToClipboardClicked() ? 'copied!' : 'copy to clipboard')
+      ])
     ),
     m('.examples', [
       jqueryExample(user.projectKey)
     ]),
     m('form', { action: 'https://jsbin.com?js,console', method: 'POST', target: '_blank' }, [
-      m('input[type=hidden]', { name: 'javascript', value: '$.get("https://xpdkg.gromit.io/api").then(function(response){\n\tconsole.log(response.location)\n})' }),
+      m('input[type=hidden]', { name: 'javascript', value: '$.get("https://' + user.projectKey + '.gromit.io/api").then(function(response){\n\tconsole.log(response.location)\n})' }),
       m('input[type=hidden]', { name: 'html', value: '<!DOCTYPE html>\n<html>\n<head>\n<script src="https://code.jquery.com/jquery-2.1.4.js"></script>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width">\n<title>JS Bin</title>\n</head>\n<body>\n</body>\n</html>' }),
       m('button[type=submit].btn', 'Show in JSBin')
     ])
@@ -111,8 +140,18 @@ const header = () => m('header.header-primary', [
   ])
 ])
 
+function loadClipboard(element, isInitialized){
+  if( ! isInitialized ){
+    const clipboard = new Clipboard('.copy-to-clipboard');
+    clipboard.on('success', function(){
+      copyToClipboardClicked(true)
+      m.redraw()
+    })
+  }
+}
+
 dashboard.view = (ctrl) => {
-  return m('.fullscreen-content', [
+  return m('.fullscreen-content', { config: loadClipboard }, [
     header(),
     m('.content.dashboard',[
       ctrl.user() ? renderInfo(ctrl.user()) : m(spinner)

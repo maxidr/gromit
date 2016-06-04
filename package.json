@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "webpack-dev-server --colors",
-    "build": "webpack",
+    "build": "webpack --config webpack.config.prod.js",
     "//": "node composition | faucet",
     "test": ""
   },
@@ -36,6 +36,7 @@
     "webpack-dev-server": "1.14.1"
   },
   "dependencies": {
+    "clipboard": "1.5.10",
     "json-formatter-js": "0.3.0",
     "m-validator": "1.0.0",
     "mithril": "0.2.3",

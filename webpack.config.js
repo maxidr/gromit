@@ -8,8 +8,8 @@ var postcssImport = require('postcss-import')
 module.exports = {
   entry: "./app.js",
 
-  devtool: 'source-map',
-  //devtool: 'eval',
+  //devtool: 'source-map',
+  devtool: 'eval',
   debug: true,
 
   output: {

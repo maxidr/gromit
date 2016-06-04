@@ -90,8 +90,8 @@ module.exports = {
     /*
     new S3Plugin({
       s3Options: {
-        accessKeyId: 'AKIAIESG5CWLX7PHPWPQ',
-        secretAccessKey: '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',
+        accessKeyId: '...',
+        secretAccessKey: '...',
       },
       s3UploadOptions: {
         Bucket: 'static-files-gromit'
