@@ -8,6 +8,7 @@ var ReplacePlugin = require('replace-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var autoprefixer = require('autoprefixer')
 var postcssImport = require('postcss-import')
+var precss = require('precss')
 
 function makeDirectory(directory){
   if( !fs.existsSync(directory) ){
