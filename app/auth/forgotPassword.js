@@ -3,6 +3,7 @@ const inlineErrors = require('../../lib/inlineErrorView')
 const constraints = require('../../lib/promisedValidator')
 const pipe = require('ramda/src/pipeP')
 const backend = require('../backend/users')
+const focus = require('../ui/focusOnField')
 
 require('./index.css')
 
@@ -24,7 +25,8 @@ const formView = (ctrl) => m('.auth.forgot-password', [
   m('form', { onsubmit: ctrl.submit }, [
     m('.auth__field',[
       m('label.auth__field__label', 'Email'),
-      m('input[type=email].auth__field__input', { onchange: m.withAttr('value', ctrl.user.email) }),
+      m('input[type=email].auth__field__input',
+				{ onchange: m.withAttr('value', ctrl.user.email), config: focus }),
       ctrl.errors('email')
     ]),
     m('.auth__field',[

@@ -109,11 +109,28 @@
     margin: 0 auto;
     padding: 10px 20px;
     margin-top: 30px;
-    font-size: 14px;
+    font-size: 15px;
 		overflow: scroll;
+
+		h2 {
+			text-align: center;
+			color: white;	
+		}
 	}
 
+	.json-formatter-dark.json-formatter-row .json-formatter-toggler {
+		opacity: 1;
+		margin-right: 3px;
+		color: #676767;
+	}
 
+	.json-formatter-dark.json-formatter-row .json-formatter-key { color: #8da6ce; }
+	.json-formatter-dark.json-formatter-row .json-formatter-string { color: #61ce3c; }
+
+}
+
+
+.json-formatter-dark.json-formatter-row .json-formatter-toggler:after {
 
 }
 

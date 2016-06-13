@@ -32,30 +32,34 @@ dashboard.controller = function() {
   const ctrl = this
 
   ctrl.user = m.prop()
+	ctrl.serviceResponse = m.prop()
 
   m.startComputation();
   user.fetch().then(function(user){
-    console.log(user)
     ctrl.user(user)
-    m.endComputation();
+		return m.request({ method: 'GET', url: 'https://' + user.projectKey + '.gromit.io/api', background: true })
+			.then(ctrl.serviceResponse)
+			.then(m.endComputation)
   }).catch(function(){
     console.log('Fetch user fails, redirect to home /');
     session(null)
     m.endComputation()
     m.route('/')
   })
+
 }
 
+//const json = {"client":{"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36","browser":{"family":"Chrome","major":"49","minor":"0","patch":"2623"},"os":{"family":"Mac OS X","major":"10","minor":"11","patch":"4"},"device":{"family":"Other"}},"location":{"ip":"8.8.8.8","latitude":37.3845,"longitude":-122.0881,"timeZone":{"countryIso":"US","id":"America/Los_Angeles","janOffset":-8.0,"julOffset":-7.0,"rawOffset":-8.0},"subdivisions":[{"name":"California","geonNameId":5332921},{"name":"Santa Clara County","geonNameId":5393021}],"country":{"area":9629091,"capital":"Washington","currencyCode":"USD","currencyName":"Dollar","language":"en-US","name":"United States","phone":"1","population":310232863,"iso":"US","geoNameId":6252001},"continent":{"geonameId":6255149,"iso":"NA","name":"North America"},"city":{"name":"Mountain View","geoNameId":5375480,"population":74066}}};
 
-const json = {"client":{"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36","browser":{"family":"Chrome","major":"49","minor":"0","patch":"2623"},"os":{"family":"Mac OS X","major":"10","minor":"11","patch":"4"},"device":{"family":"Other"}},"location":{"ip":"8.8.8.8","latitude":37.3845,"longitude":-122.0881,"timeZone":{"countryIso":"US","id":"America/Los_Angeles","janOffset":-8.0,"julOffset":-7.0,"rawOffset":-8.0},"subdivisions":[{"name":"California","geonNameId":5332921},{"name":"Santa Clara County","geonNameId":5393021}],"country":{"area":9629091,"capital":"Washington","currencyCode":"USD","currencyName":"Dollar","language":"en-US","name":"United States","phone":"1","population":310232863,"iso":"US","geoNameId":6252001},"continent":{"geonameId":6255149,"iso":"NA","name":"North America"},"city":{"name":"Mountain View","geoNameId":5375480,"population":74066}}};
-
-function renderJSON(element, initialize){
-  if( ! initialize ){
-    var jsonFormat = new JSONFormatter(json, 2, {
-			theme: 'dark'
-		})
-    element.appendChild(jsonFormat.render())
-  }
+function renderJSON(json){
+	return function(element, initialize){
+	  if( ! initialize ){
+	    var jsonFormat = new JSONFormatter(json, 2, {
+				theme: 'dark'
+			})
+	    element.appendChild(jsonFormat.render())
+	  }
+	}
 }
 
 
@@ -93,15 +97,8 @@ function jqueryExample(key){
 
 }
 
-const renderInfo = (user) => [
+const renderInfo = (user, serviceResponse) => [
   m('h2', [ 'Welcome', m('span.account', user.email) ]),
-  /*
-  m('dl', [
-    m('dt', 'Your key'), m('dd', user.projectKey),
-    m('dt', 'Plan'), m('dd', [ user.plan, m('a.upgrade-plan', 'Upgrade your plan') ]),
-    m('dt', 'Already used'), m('dd', formatNumber(user.usages, '.'))
-  ]),
-  */
   m('ul', [
     m('li', [ m('.label', 'Your key'), m('.value', user.projectKey) ]),
     m('li', [ m('.label', 'Plan'), m('.value', [
@@ -129,7 +126,10 @@ const renderInfo = (user) => [
       m('input[type=hidden]', { name: 'html', value: '<!DOCTYPE html>\n<html>\n<head>\n<script src="https://code.jquery.com/jquery-2.1.4.js"></script>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width">\n<title>JS Bin</title>\n</head>\n<body>\n</body>\n</html>' }),
       m('button[type=submit].btn', 'Show in JSBin')
     ]),
-    m('.json-result', { config: renderJSON })
+		m('.json-result', [
+			m('h2.result-example', 'Service response example'),
+			m('div', { config: renderJSON(serviceResponse) })
+		])
   ])
 ]
 
@@ -160,7 +160,7 @@ dashboard.view = (ctrl) => {
   return m('.fullscreen-content', { config: loadClipboard }, [
     header(),
     m('.content.dashboard',[
-      ctrl.user() ? renderInfo(ctrl.user()) : m(spinner)
+      ctrl.user() ? renderInfo(ctrl.user(), ctrl.serviceResponse()) : m(spinner)
     ])
   ])
 }

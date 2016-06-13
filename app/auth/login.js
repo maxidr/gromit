@@ -8,6 +8,7 @@ const pipe = require('ramda/src/pipeP')
 const backend = require('../backend/users')
 const closeBtn = require('../closeBtn')
 const session = require('../../lib/session')
+const focus = require('../ui/focusOnField')
 
 const validate = constraints((user, errors) => {
   if( ! user.email() ){ errors('email', 'The email is required') }
@@ -54,7 +55,8 @@ login.view = (ctrl) => m('.auth', [
   m('form', { onsubmit: ctrl.submit }, [
     m('.auth__field',[
       m('label.auth__field__label', 'Email'),
-      m('input[type=email].auth__field__input', { onchange: m.withAttr('value', ctrl.user.email) }),
+      m('input[type=email].auth__field__input',
+				{ onchange: m.withAttr('value', ctrl.user.email), config: focus }),
       ctrl.errors('email')
     ]),
     m('.auth__field', [

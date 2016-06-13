@@ -3,6 +3,7 @@ const constraints = require('../../lib/promisedValidator')
 const inlineErrors = require('../../lib/inlineErrorView')
 const pipe = require('ramda/src/pipeP')
 const backend = require('../backend/users')
+const focus = require('../ui/focusOnField')
 
 const validate = constraints((user, errors) => {
   if( ! user.email() ){ errors('email', 'The email is required') }
@@ -15,9 +16,6 @@ const validate = constraints((user, errors) => {
   }
 })
 
-const focus = (el, isInit) => {
-	if( !isInit ){ el.focus() }
-}
 
 const register = {}
 
