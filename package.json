@@ -26,6 +26,7 @@
     "imports-loader": "0.6.5",
     "postcss-import": "8.1.2",
     "postcss-loader": "0.8.1",
+    "precss": "1.4.0",
     "replace-webpack-plugin": "0.1.2",
     "s3": "4.4.0",
     "sinon": "1.17.3",
@@ -37,10 +38,10 @@
   },
   "dependencies": {
     "clipboard": "1.5.10",
-    "json-formatter-js": "0.3.0",
+    "json-formatter-js": "1.0.0",
     "m-validator": "1.0.0",
     "mithril": "0.2.3",
     "mithril-validator": "1.1.0",
-    "ramda": "0.19.1"
+    "ramda": "0.21.0"
   }
 }

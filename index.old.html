@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gromit.io</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700" type="text/css">
+
+
+    <!-- replace:css -->
+    <!--<link rel="stylesheet" href="/css/app.css">-->
+    <link rel="stylesheet" href="/dist/styles.css">
+    <!-- endreplace -->
+
+
+    <!--
+    <link rel="stylesheet" href="/icomoon/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/spinner.css">
+    -->
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+    <script>
+
+      function initialize(){
+        var options = {
+          center: new google.maps.LatLng(-34.6033, -58.3817),
+          //center: new google.maps.LatLng(-10.0, -10.0),
+          zoom: 10,
+          mapTypeId: "Watercolor",
+          mapTypeControlOptions: {
+              mapTypeIds: ["Watercolor"]
+
+          },
+          disableDefaultUI: true
+        };
+        var map = new google.maps.Map(document.getElementById("googlemaps"), options);
+        map.mapTypes.set("Watercolor", new google.maps.StamenMapType("watercolor"));
+      }
+
+    </script>
+
+
+  </head>
+  <body onload="initialize()">
+
+    <div class="overlay"></div>
+
+    <div id="app-container" class="fadeInDown animated"></div>
+
+    <div id="main">
+
+      <!--
+      <iframe id="map" width="100%" height="100%"
+        style="position: fixed; top: 0; left: 0; z-index: -20;"
+        src="http://maps.stamen.com/watercolor/embed#12/-34.6033/-58.3817"
+        onLoad="onLoadHandler();">
+      </iframe>
+      -->
+      <header class="header-primary">
+        <div class="container">
+          <div class="logo">
+            Gromit<b>.io</b>
+          </div>
+          <ul class="menu">
+            <li><a href="/#/login">login</a></li>
+            <li><a href="/#/register">register</a></li>
+          </ul>
+        </div>
+      </header>
+
+      <div class="first-screen">
+
+        <div class="content-primary">
+          <h1 class="title">201.250.62.130</h1>
+          <dl>
+            <dt class="country">Country</dt>
+            <dd>Buenos Aires, Argentina</dd>
+            <dt class="location">Location</dt>
+            <dd>-34.6033, -58.3817</dd>
+            <dt class="timezone">Timezone</dt>
+            <dd>UTC-3 (18:32 PM)</dd>
+            <dt class="useragent">User Agent</dt>
+            <dd>Chrome (49.0.2623) </dd>
+            <dt class="os">Operative System</dt>
+            <dd>Mac OSX (10.11.3)</dd>
+            <dt class="device">Device</dt>
+            <dd>Personal Computer</dd>
+          </dl>
+        </div>
+      </div>
+  <!--
+      <svg width="60" height="60">
+        <circle cx="30" cy="30" r="20" stroke="green" stroke-width="10" fill="transparent"></circle>
+      </svg>
+  -->
+      <div class="api-example">
+        <div class="content">
+          <div class="title">
+            Super Simple API
+          </div>
+
+          <div class="tools">
+            <ul>
+              <li>
+                <a class="selected">curl</a>
+              </li>
+              <li>
+                <a>vanilla JS</a>
+              </li>
+              <li>
+                <a>jQuery</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="command">
+            $ curl gromit.io
+          </div>
+
+          <div class="json-response">
+            <p>{</p>
+              <p class="level1">"ip": "201.250.62.130",</p>
+              <p class="level1">"hostname": "No Hostname",</p>
+              <p class="level1">"city": "Florencio Varela",</p>
+              <p class="level1">"region": "Buenos Aires",</p>
+              <p class="level1">"country": "AR",</p>
+              <p class="level1">"loc": "-34.8136,-58.3311",</p>
+
+              <p class="level1">"org": "AS22927 Telefonica de Argentina",</p>
+              <p class="level1">"postal": "1888"</p>
+            <p>}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="map-container">
+      <div id="googlemaps"></div>
+    </div>
+
+
+    <!-- replace:js -->
+    <script type="text/javascript" src="/dist/bundle.js"></script>
+    <!-- endreplace -->
+
+  </body>
+</html>

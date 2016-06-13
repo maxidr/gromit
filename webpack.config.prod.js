@@ -60,8 +60,9 @@ module.exports = {
   },
   postcss: function () {
     return [
-      autoprefixer,
-      postcssImport({ addDependencyTo: webpack })
+			autoprefixer({ browsers: ['last 3 version'] }),
+			postcssImport({ addDependencyTo: webpack }),
+			precss()
     ];
   },
 

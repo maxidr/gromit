@@ -4,6 +4,7 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var autoprefixer = require('autoprefixer')
 var postcssImport = require('postcss-import')
+var precss = require('precss')
 
 module.exports = {
   entry: "./app.js",
@@ -41,8 +42,9 @@ module.exports = {
   },
   postcss: function () {
     return [
-      autoprefixer,
-      postcssImport({ addDependencyTo: webpack })
+      autoprefixer({ browsers: ['last 3 version'] }),
+      postcssImport({ addDependencyTo: webpack }),
+			precss()
     ];
   },
 

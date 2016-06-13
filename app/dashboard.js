@@ -1,12 +1,14 @@
 import m from 'mithril';
 const user = require('./backend/users')
 const session = require('../lib/session')
-const spinner = require('../ui/spinner')
+const spinner = require('./ui/spinner')
 const Clipboard = require('clipboard')
 
-require('../css/dashboard.css')
+//require('../css/dashboard.css')
+require('./dashboard.css')
+
 //const JSONFormatter = require('json-formatter-js/src/index.js')
-//const JSONFormatter = require('json-formatter-js')
+import JSONFormatter from 'json-formatter-js'
 //import JSONFormatter from 'json-formatter-js'
 //require('json-formatter-js/dist/style.css')
 
@@ -37,21 +39,25 @@ dashboard.controller = function() {
     ctrl.user(user)
     m.endComputation();
   }).catch(function(){
+    console.log('Fetch user fails, redirect to home /');
     session(null)
-    m.route('/');
+    m.endComputation()
+    m.route('/')
   })
 }
 
-/*
+
 const json = {"client":{"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36","browser":{"family":"Chrome","major":"49","minor":"0","patch":"2623"},"os":{"family":"Mac OS X","major":"10","minor":"11","patch":"4"},"device":{"family":"Other"}},"location":{"ip":"8.8.8.8","latitude":37.3845,"longitude":-122.0881,"timeZone":{"countryIso":"US","id":"America/Los_Angeles","janOffset":-8.0,"julOffset":-7.0,"rawOffset":-8.0},"subdivisions":[{"name":"California","geonNameId":5332921},{"name":"Santa Clara County","geonNameId":5393021}],"country":{"area":9629091,"capital":"Washington","currencyCode":"USD","currencyName":"Dollar","language":"en-US","name":"United States","phone":"1","population":310232863,"iso":"US","geoNameId":6252001},"continent":{"geonameId":6255149,"iso":"NA","name":"North America"},"city":{"name":"Mountain View","geoNameId":5375480,"population":74066}}};
-var jsonFormat = new window.JSONFormatter(json)
 
 function renderJSON(element, initialize){
   if( ! initialize ){
+    var jsonFormat = new JSONFormatter(json, 2, {
+			theme: 'dark'
+		})
     element.appendChild(jsonFormat.render())
   }
 }
-*/
+
 
 // FROM http://markup.su/highlighter/
 function jqueryExample(key){
@@ -63,8 +69,7 @@ function jqueryExample(key){
             '<span style="color:#ff6400;">console</span><span style="color:#8da6ce">.log</span>(response.<span style="color:#8da6ce">location</span>)' +
             '</span>' +
             "<span style='display: block'>})</span>" +
-            "</pre>"),
-    //m('.json-result', { config: renderJSON })
+            "</pre>")
   ])
   /*
     m('pre', { style: "background:#0c1021;color:#f8f8f8" }, [
@@ -123,7 +128,8 @@ const renderInfo = (user) => [
       m('input[type=hidden]', { name: 'javascript', value: '$.get("https://' + user.projectKey + '.gromit.io/api").then(function(response){\n\tconsole.log(response.location)\n})' }),
       m('input[type=hidden]', { name: 'html', value: '<!DOCTYPE html>\n<html>\n<head>\n<script src="https://code.jquery.com/jquery-2.1.4.js"></script>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width">\n<title>JS Bin</title>\n</head>\n<body>\n</body>\n</html>' }),
       m('button[type=submit].btn', 'Show in JSBin')
-    ])
+    ]),
+    m('.json-result', { config: renderJSON })
   ])
 ]
 

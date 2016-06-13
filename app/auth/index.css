@@ -1,0 +1,95 @@
+@import '../shared';
+
+.auth {
+	text-align: center;
+	padding: 50px 25px 25px;
+	width: 50%;
+	min-width: 500px;
+	max-width: 600px;
+	margin: 0 auto;
+
+	&__service-errors {
+		text-align: center;
+		display: inline;
+		font-size: 1.2em;
+	}
+
+	&__service-errors > .error,
+	&__field > .error {
+		font-size: .8em;
+		font-weight: 100;
+		color: $red;
+	}
+
+}
+
+
+.auth__field > .error { text-align: left; }
+
+.auth__field { margin-bottom: 15px; }
+
+.auth__field__label {
+	display: block;
+	text-transform: uppercase;
+	font-size: 0.8em;
+	text-align: left;
+}
+
+.auth__field__input {
+	display: block;
+	width: 100%;
+	width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 1.4em;
+  font-weight: 100;
+  border-radius: 4px;
+}
+
+.auth__submit {
+	width: 100%;
+	padding: 10px 15px;
+  border-radius: 4px;
+  border: none;
+  background: $red;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  display: block;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 auto;
+  margin-top: 25px;
+}
+
+.auth__submit:active,
+.auth__submit:hover,
+.auth__submit:focus { background: #d80d24; }
+
+
+.auth__more-options {
+	margin: 35px 0 15px;
+	font-size: .8em;
+	color: #7b7b7b;
+}
+
+.more-options__forgot-password,
+.more-options__register,
+.more-options__login {
+	text-transform: uppercase;
+  padding: 10px 5px;
+  line-height: 1em;
+  display: inline-block;
+  border-bottom: 5px solid transparent;
+	margin-bottom: 10px;
+}
+
+.more-options__forgot-password:hover,
+.more-options__forgot-password:focus,
+.more-options__register:hover,
+.more-options__register:focus,
+.more-options__login:hover,
+.more-options__login:focus {
+	border-bottom: 5px solid $red;
+	color: #000;
+}

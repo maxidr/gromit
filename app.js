@@ -1,52 +1,54 @@
 const m = require('mithril')
+
+window.m = m
 //require('./index.css')
 var icons = require('./css/icons.css')
-var css = require('./css/app.css')
+//var css = require('./css/app.css')
+var css = require('./css/base.css')
 
 // Landing page style. See: http://maps.stamen.com/
 require('./app/tile.stamen')
 
 import session from './lib/session'
-import login from './app/login.js'
-import forgotPassword from './app/forgotPassword.js'
-import register from './app/register.js'
-import dashboard from './app/dashboard.js'
+
+import login from './app/auth/login'
+import forgotPassword from './app/auth/forgotPassword'
+import register from './app/auth/register'
+import dashboard from './app/dashboard'
 import logout from './app/logout'
 
+import complement from 'ramda/src/complement'
+import merge from 'ramda/src/merge'
+
+
+const isLogged = () => session() && session().token
+const isNotLogged = complement(isLogged)
+const emptyView = { view: () => '' }
+
+const redirect = require('./lib/route-helpers').redirect
+const routes = merge(
+	redirect(isNotLogged, '/login', {
+		'/': dashboard,
+	  '/logout': logout
+	}),
+	redirect(isLogged, '/', {
+	  '/login': login,
+	  '/forgot-password': forgotPassword,
+	  '/register': register,
+	})
+)
+
 m.route.mode = "hash";
-m.route(document.querySelector('#app-container'), '/dashboard', {
-  '/': redirectIfAlreadyLogedIn({ view: view }),
-  '/login': redirectIfAlreadyLogedIn(login),
-  '/forgot-password': redirectIfAlreadyLogedIn(forgotPassword),
-  '/register': redirectIfAlreadyLogedIn(register),
-  '/dashboard': secure(dashboard),
-  '/logout': secure(logout)
-})
+m.route(document.querySelector('#container'), '/', routes)
 
-const noop = () => {}
-
-function redirectIfAlreadyLogedIn(component){
-  return {
-    controller: function(){
-      if( (session() || {}).token ){ return m.route('/dashboard') }
-      return component.controller ? new component.controller(arguments) : null
-    },
-    view: component.view
-  }
+function hideLandingPageLayout(){
+  [ document.getElementById('main'),
+    document.getElementById('map-container') ].forEach(
+      (el) => el.style.display = 'none'
+  )
 }
 
-function secure(component){
-  return {
-    controller: function(){
-      if( (session() || {}).token ){
-        return new component.controller(arguments)
-      }
-      return m.route('/')
-    },
-    view: component.view
-  }
+function showLandingPageLayout(){
+  [ document.getElementById('main'),
+    document.getElementById('map-container') ].forEach((el) => el.style.display = '' )
 }
-
-function view(){ return '' }
-
-//require('./mock/api');

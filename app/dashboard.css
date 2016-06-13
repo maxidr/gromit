@@ -1,0 +1,127 @@
+@import 'shared';
+
+.fullscreen-content {
+  height: 100vh;
+  width: 100%;
+  background: white;
+}
+
+.header-primary {
+  background-color: rgba(0,0,0,0.6);
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+
+	.container {
+	  display: table;
+	  width: 100%;
+	  margin: 0 10px;
+	}
+
+	b { color: $red; }
+
+	.logo, .menu {
+		display: table-cell;
+	  padding: 0 15px;
+	  vertical-align: middle;
+	}
+
+	.logo { text-align: left; font-size: 20px; color: white; }
+
+	.menu {
+		text-align: right; padding-right: 10px; color: #CECECE;
+		li { display: inline; padding: 0 2px; }
+		a { padding: 6px 15px; }
+		a:hover { border-bottom: 5px solid #FC2940; color: white; }
+	}
+}
+
+.dashboard {
+	padding: 50px 25px 25px 25px;
+	text-align: center;
+	h1 { text-transform: uppercase; }
+	h2 { font-weight: 100; }
+	h2 > .account { margin-left: 0.5em; font-weight: 600; }
+
+	ul { list-style: none; display: inline-block; }
+	ul li { text-align: left; }
+
+	ul li .label {
+	  margin-right: 15px;
+	  color: #7B7B7B;
+	  font-size: 13px;
+	  display: inline-block;
+	  min-width: 10em;
+	  text-align: right;
+	}
+	ul li .value { font-weight: 600; display: inline; }
+
+	.how-to { margin-top: 40px; }
+	.how-to ul { text-align: center; }
+	.how-to ul li .label { min-width: auto; }
+
+	.copy-to-clipboard {
+	  margin-left: 20px;
+	  color: #BDBDBD;
+	  font-size: 13px;
+	  display: inline-block;
+	  text-align: right;
+	  transition: color 0.5s ease;
+	}
+
+	.copy-to-clipboard:hover {
+	  transition: color 0.5s ease;
+	  color: #4C4C4C;
+	}
+
+	.jquery-example {
+	  display: inline-block;
+	  padding: 10px;
+	  font-size: 16px;
+	  text-align: left;
+	}
+
+	.jquery-example > pre {
+    padding: 10px 20px;
+    border-radius: 4px;
+	}
+
+	.btn {
+		padding: 10px 15px;
+		border-radius: 4px;
+		border: none;
+		background: $red;
+		color: #fff;
+		font-size: 1em;
+		cursor: pointer;
+		display: block;
+		text-transform: uppercase;
+		font-weight: 600;
+		margin: 0 auto;
+		margin-top: 25px;
+	}
+
+	.json-result {
+		background-color: #0C1021;
+    border-radius: 4px;
+    text-align: left;
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px 20px;
+    margin-top: 30px;
+    font-size: 14px;
+		overflow: scroll;
+	}
+
+
+
+}
+
+/*
+.header-primary .container .logo,
+.header-primary .container .menu {
+  display: table-cell;
+  padding: 0 15px;
+  vertical-align: middle;
+}
+*/

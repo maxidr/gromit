@@ -1,9 +1,8 @@
 const m = require('mithril');
-const constraints = require('../lib/promisedValidator')
-const inlineErrors = require('../lib/inlineErrorView')
+const constraints = require('../../lib/promisedValidator')
+const inlineErrors = require('../../lib/inlineErrorView')
 const pipe = require('ramda/src/pipeP')
-const backend = require('./backend/users')
-const closeBtn = require('./closeBtn')
+const backend = require('../backend/users')
 
 const validate = constraints((user, errors) => {
   if( ! user.email() ){ errors('email', 'The email is required') }
@@ -16,6 +15,9 @@ const validate = constraints((user, errors) => {
   }
 })
 
+const focus = (el, isInit) => {
+	if( !isInit ){ el.focus() }
+}
 
 const register = {}
 
@@ -49,35 +51,37 @@ register.controller = function(){
 }
 
 const successView = (email) => m('.success-register.content', [
-  closeBtn,
   m('h1', 'Perfect, now you are registered!'),
   m('h2', 'In short you will receive an email in your account (' + email + ') with the next steps to access to your dashboard'),
   m("a[href='/login']", { config: m.route }, 'Go back to the login page')
 ])
 
-const formView = (ctrl) => m('.register.content', [
-  closeBtn,
-  m('h1', 'Register'),
-  m('.service-errors', ctrl.errors('service')),
+const formView = (ctrl) => m('.auth.register', [
+  m('h1.auth__title', 'Register'),
+  m('.auth__service-errors', ctrl.errors('service')),
   m('form', { onsubmit: ctrl.submit }, [
-    m('.field',[
-      m('label', 'Email'),
-      m('input[type=email]', { onchange: m.withAttr('value', ctrl.user.email) }),
+    m('.auth__field', [
+      m('label.auth__field__label', 'Email'),
+      m('input[type=email].auth__field__input',
+				{ onchange: m.withAttr('value', ctrl.user.email), config: focus }),
       ctrl.errors('email')
     ]),
-    m('.field', [
-      m('label', 'Password'),
-      m('input[type=password]', { onchange: m.withAttr('value', ctrl.user.password) }),
+    m('.auth__field', [
+      m('label.auth__field__label', 'Password'),
+      m('input[type=password].auth__field__input', { onchange: m.withAttr('value', ctrl.user.password) }),
       ctrl.errors('password')
     ]),
-    m('.field', [
-      m('label', 'Retype your password'),
-      m('input[type=password]', { onchange: m.withAttr('value', ctrl.user.retypedPassword) }),
+    m('.auth__field', [
+      m('label.auth__field__label', 'Retype your password'),
+      m('input[type=password].auth__field__input', { onchange: m.withAttr('value', ctrl.user.retypedPassword) }),
       ctrl.errors('retypedPassword')
     ]),
-    m('button[type=submit].btn.btn--large', 'Create my user')
-  ])
-]);
+    m('button[type=submit].auth__submit', 'Create my user'),
+		m('.auth__more-options', [
+      m('div', m('a.more-options__login', { href: '#/login' }, "I already have an account"))
+  	])
+	])
+])
 
 register.view = (ctrl) => ctrl.showSuccessMsg() ? successView(ctrl.user.email()) : formView(ctrl)
 

@@ -1,9 +1,10 @@
 import m from 'mithril';
-const inlineErrors = require('../lib/inlineErrorView')
-const constraints = require('../lib/promisedValidator')
+const inlineErrors = require('../../lib/inlineErrorView')
+const constraints = require('../../lib/promisedValidator')
 const pipe = require('ramda/src/pipeP')
-const backend = require('./backend/users')
-const closeBtn = require('./closeBtn')
+const backend = require('../backend/users')
+
+require('./index.css')
 
 const validate = constraints((user, errors) => {
   if( ! user.email() ){ errors('email', 'The email is required') }
@@ -17,27 +18,26 @@ const successView = (email) => m('.success-register.content', [
   m("a[href='/login'].btn", { config: m.route }, 'Go back to the login page')
 ])
 
-const formView = (ctrl) => m('.forgot-password.content', [
-  closeBtn,
-  m('h1', 'Forgot Password'),
-  ctrl.errors('service'),
+const formView = (ctrl) => m('.auth.forgot-password', [
+  m('h1.auth__title', 'Forgot Password'),
+	m('.auth__service-errors', ctrl.errors('service')),
   m('form', { onsubmit: ctrl.submit }, [
-    m('.field',[
-      m('label', 'Email'),
-      m('input[type=email]', { onchange: m.withAttr('value', ctrl.user.email) }),
+    m('.auth__field',[
+      m('label.auth__field__label', 'Email'),
+      m('input[type=email].auth__field__input', { onchange: m.withAttr('value', ctrl.user.email) }),
       ctrl.errors('email')
     ]),
-    m('.field',[
-      m('label', 'New password'),
-      m('input[type=password]', { onchange: m.withAttr('value', ctrl.user.password) }),
+    m('.auth__field',[
+      m('label.auth__field__label', 'New password'),
+      m('input[type=password].auth__field__input', { onchange: m.withAttr('value', ctrl.user.password) }),
       ctrl.errors('password')
     ]),
-    m('.field',[
-      m('button[type=submit].btn.btn--large', 'Reset my password')
+    m('.auth__field',[
+      m('button[type=submit].auth__submit', 'Reset my password')
     ]),
-    m('.more', [
-      m('.field', m('a.login', { href: '#/login' }, 'I remember my password now')),
-      m('.field', m('a.register', { href: '#/register' }, "you don't have an user yet?"))
+    m('.auth__more-options', [
+      m('div', m('a.more-options__login', { href: '#/login' }, 'I remember my password now')),
+      m('div', m('a.more-options__register', { href: '#/register' }, "you don't have an user yet?"))
     ])
   ]),
 
