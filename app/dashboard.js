@@ -135,10 +135,10 @@ const renderInfo = (user, serviceResponse) => [
 	tabs([
 		{
 			title: 'Examples',
+			visible: true,
 			body: examplesView(user, serviceResponse)
 		},{
 			title: 'Config',
-			visible: true,
 			body: originList(user)
 		}
 	])
