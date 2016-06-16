@@ -4,6 +4,8 @@ const session = require('../lib/session')
 const spinner = require('./ui/spinner')
 const Clipboard = require('clipboard')
 
+import originList from './dashboard/originList'
+
 //require('../css/dashboard.css')
 require('./dashboard.css')
 
@@ -75,37 +77,36 @@ function jqueryExample(key){
             "<span style='display: block'>})</span>" +
             "</pre>")
   ])
-  /*
-    m('pre', { style: "background:#0c1021;color:#f8f8f8" }, [
-      m('span', { style: "color:#fbde2d" }, '$'),
-      '.get(', m('span', { style: "color:#61ce3c">'https://zpevg.gromit.io/api' }), ').then(' , m('span', { style: "color:#fbde2d" }, 'function'), '(response){'
-      m('span', { style: 'display: block; padding-left: 2em;' }, [
-        m('span', { style: 'color:#ff6400' }, 'console'), m('span', { style: 'color:#8da6ce' }, '.log'), '(response.' ,
-        m('span', { style: 'color:#8da6ce' }, 'location')
-        <span style="color:#8da6ce">location</span>.country.<span style="color:#8da6ce">name</span>)
-        m('span', { style: })
-      ])
-    ])
-    */
-  /*
-    <pre style="background:#0c1021;color:#f8f8f8">
-      <span style="color:#fbde2d">$</span>.get(<span style="color:#61ce3c">'https://zpevg.gromit.io/api'</span>).then(<span style="color:#fbde2d">function</span>(response){
-      <span style="color:#ff6400">console</span><span style="color:#8da6ce">.log</span>(response.<span style="color:#8da6ce">location</span>.country.<span style="color:#8da6ce">name</span>)
-    })
-    </pre>
-    */
-
 }
+
+const tabs = (contents) => m('.tabs',
+	contents.map((content, index) => m('.tab', [
+		m('input[type=radio]' + (content.visible ? '[checked=checked]' : '' ),
+			{ name: 'tab-groups', id: 'tab-' + index }),
+		m('label.tab__label', { for: 'tab-' + index }, content.title),
+		m('.tab__content', content.body)
+	]))
+);
 
 const renderInfo = (user, serviceResponse) => [
   m('h2', [ 'Welcome', m('span.account', user.email) ]),
   m('ul', [
     m('li', [ m('.label', 'Your key'), m('.value', user.projectKey) ]),
-    m('li', [ m('.label', 'Plan'), m('.value', [
-      user.plan ])//, m('a.upgrade-plan', 'Upgrade your plan') ])
-    ]),
+    m('li', [ m('.label', 'Plan'), m('.value', user.plan) ]),//[ user.plan, m('a.upgrade-plan', 'Upgrade your plan') ])
     m('li', [ m('.label', 'Already used'), m('.value', formatNumber(user.usages, '.')) ])
   ]),
+	tabs([
+		{
+			title: 'Examples',
+			//visible: true,
+			body: m('h2', 'Here you see the examples')
+		},{
+			title: 'Config',
+			visible: true,
+			//body: m('h2', 'Here you see the examples 2'),
+			body: originList(user)
+		}
+	]),
   m('.how-to', [
     m('h2', 'How to use your API'),
     m('ul',

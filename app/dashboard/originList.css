@@ -1,0 +1,42 @@
+@import '../shared';
+
+.origins-config {
+	text-align: left;
+
+	&__origin-field {
+		display: block;
+		margin: 10px 0;
+	}
+
+	&__title {
+
+	}
+
+	&__explanation {
+		font-size: 0.8em;
+		font-weight: 400;
+		font-family: Helvetica;
+		color: #797979;
+		margin-bottom: 15px;
+	}
+
+	.origin-field__input-new {
+		display: inline-block;
+		width: 40%;
+	  border: 1px solid #ccc;
+	  padding: 10px;
+	  font-size: 1.4em;
+	  font-weight: 100;
+	  border-radius: 4px;
+	}
+
+	.origin-field__add {
+		margin-left: 10px;
+		@mixin link;
+	}
+
+	&__add-new {
+		//display: inline-block;
+		@mixin link;
+	}
+}
