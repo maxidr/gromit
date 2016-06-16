@@ -79,6 +79,7 @@ function jqueryExample(key){
   ])
 }
 
+/*
 const tabs = (contents) => m('.tabs',
 	contents.map((content, index) => m('.tab', [
 		m('input[type=radio]' + (content.visible ? '[checked=checked]' : '' ),
@@ -86,7 +87,43 @@ const tabs = (contents) => m('.tabs',
 		m('label.tab__label', { for: 'tab-' + index }, content.title),
 		m('.tab__content', content.body)
 	]))
-);
+)
+*/
+const tabs = contents => m('.tabs',
+	contents.map((content, index) => [
+		m('input[type=radio]' + (content.visible ? '[checked=checked]' : '' ), { name: 'tab-groups', id: 'tab-' + index }),
+		m('section', [
+			m('h1', m('label', { for: 'tab-' + index }, content.title)),
+			m('div', content.body)
+		])
+	])
+)
+
+const examplesView = ( user, serviceResponse ) => m('.how-to', [
+	m('h2', 'How to use your API'),
+	m('ul',
+		m('li', [
+			m('.label', 'Endpoint'),
+			m('.value', 'https://' + user.projectKey + '.gromit.io/api'),
+			m('a.copy-to-clipboard', {
+					'data-clipboard-text': 'https://' + user.projectKey + '.gromit.io/api',
+					 class: (copyToClipboardClicked() ? 'pulsate' : '') },
+				copyToClipboardClicked() ? 'copied!' : 'copy to clipboard')
+		])
+	),
+	m('.examples', [
+		jqueryExample(user.projectKey)
+	]),
+	m('form', { action: 'https://jsbin.com?js,console', method: 'POST', target: '_blank' }, [
+		m('input[type=hidden]', { name: 'javascript', value: '$.get("https://' + user.projectKey + '.gromit.io/api").then(function(response){\n\tconsole.log(response.location)\n})' }),
+		m('input[type=hidden]', { name: 'html', value: '<!DOCTYPE html>\n<html>\n<head>\n<script src="https://code.jquery.com/jquery-2.1.4.js"></script>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width">\n<title>JS Bin</title>\n</head>\n<body>\n</body>\n</html>' }),
+		m('button[type=submit].btn', 'Show in JSBin')
+	]),
+	m('.json-result', [
+		m('h2.result-example', 'Service response example'),
+		m('div', { config: renderJSON(serviceResponse) })
+	])
+])
 
 const renderInfo = (user, serviceResponse) => [
   m('h2', [ 'Welcome', m('span.account', user.email) ]),
@@ -98,40 +135,13 @@ const renderInfo = (user, serviceResponse) => [
 	tabs([
 		{
 			title: 'Examples',
-			//visible: true,
-			body: m('h2', 'Here you see the examples')
+			body: examplesView(user, serviceResponse)
 		},{
 			title: 'Config',
 			visible: true,
-			//body: m('h2', 'Here you see the examples 2'),
 			body: originList(user)
 		}
-	]),
-  m('.how-to', [
-    m('h2', 'How to use your API'),
-    m('ul',
-      m('li', [
-        m('.label', 'Endpoint'),
-        m('.value', 'https://' + user.projectKey + '.gromit.io/api'),
-        m('a.copy-to-clipboard', {
-            'data-clipboard-text': 'https://' + user.projectKey + '.gromit.io/api',
-             class: (copyToClipboardClicked() ? 'pulsate' : '') },
-          copyToClipboardClicked() ? 'copied!' : 'copy to clipboard')
-      ])
-    ),
-    m('.examples', [
-      jqueryExample(user.projectKey)
-    ]),
-    m('form', { action: 'https://jsbin.com?js,console', method: 'POST', target: '_blank' }, [
-      m('input[type=hidden]', { name: 'javascript', value: '$.get("https://' + user.projectKey + '.gromit.io/api").then(function(response){\n\tconsole.log(response.location)\n})' }),
-      m('input[type=hidden]', { name: 'html', value: '<!DOCTYPE html>\n<html>\n<head>\n<script src="https://code.jquery.com/jquery-2.1.4.js"></script>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width">\n<title>JS Bin</title>\n</head>\n<body>\n</body>\n</html>' }),
-      m('button[type=submit].btn', 'Show in JSBin')
-    ]),
-		m('.json-result', [
-			m('h2.result-example', 'Service response example'),
-			m('div', { config: renderJSON(serviceResponse) })
-		])
-  ])
+	])
 ]
 
 function formatNumber(number, separator) {

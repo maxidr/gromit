@@ -57,7 +57,7 @@
 	}
 	ul li .value { font-weight: 600; display: inline; }
 
-	.how-to { margin-top: 40px; }
+
 	.how-to ul { text-align: center; }
 	.how-to ul li .label { min-width: auto; }
 
@@ -119,20 +119,78 @@
 	.json-formatter-dark.json-formatter-row .json-formatter-key { color: #8da6ce; }
 	.json-formatter-dark.json-formatter-row .json-formatter-string { color: #61ce3c; }
 
-	.tabs {
+	.tabs { margin-top: 40px; }
+
+	.tabs { float: left; width: 100%; }
+
+	.tabs > input { display : none; }
+
+	.tabs > input:not(:checked) + section > div {
+		display: none;
+	}
+
+	.tabs > input:not(:checked) + section > h1 > label:hover {
+		border-bottom: 4px solid $red;
+		color: black;
+	}
+
+	.tabs > input:checked + section > h1 > label {
+		cursor: default;
+		border-bottom: 4px solid $red;
+		color: black;
+	}
+
+	.tabs > section > div {
+		float: right;
+		width: 100%;
+		margin: 2.3em 0 0 -100%;
+		position: relative;
+	  z-index: 1;
+		border-top: 1px solid #f3f3f3;
+		padding-top: 20px;
+	}
+
+	.tabs > section > h1 {
+		float: left;
+		font-size: 1em;
+		font-weight: normal;
+	}
+
+	.tabs > section > h1 > label {
+		cursor: pointer;
+		-moz-user-select : none;
+		-ms-user-select : none;
+		-webkit-user-select : none;
+		padding: 10px 10px 3px 10px;
+		padding: 8px 5px;
 	  position: relative;
-	  min-height: 200px; /* This part sucks */
+		margin-right: 15px;
+		font-size: 1em;
+		cursor: pointer;
+		text-transform: uppercase;
+	}
+
+
+/*
+	.tabs > input:checked + section > h1{
+	  position : relative;
+	  z-index  : 2;
+	}
+*/
+/*
+	.tabss {
+	  position: relative;
+	  min-height: 200px;
 	  clear: both;
 	  margin: 25px 0;
 	}
 
-	.tab {
+	.tabs {
 	  float: left;
 		display: inline-block;
 	}
 
-	.tab__label {
-	  /*background: #eee;*/
+	.tabs__label {
 		padding: 10px 10px 3px 10px;
 	  position: relative;
 		margin-right: 15px;
@@ -141,11 +199,11 @@
 		text-transform: uppercase;
 	}
 
-	.tab__label:hover {
+	.tabs__label:hover {
 		border-bottom: 3px solid $red;
 	}
 
-	.tab > [type=radio]:checked ~ .tab__label {
+	.tabs > [type=radio]:checked ~ .tabs__label {
 		padding: 8px 10px;
 		border-radius: 4px;
 	  z-index: 2;
@@ -154,13 +212,13 @@
 		cursor: default;
 	}
 
-	.tab > [type=radio]:checked ~ .tab__label:hover { border-bottom: none; }
+	.tabs > [type=radio]:checked ~ .tabs__label:hover { border-bottom: none; }
 
-	.tab > [type=radio] {
+	.tabs > [type=radio] {
 	  display: none;
 	}
 
-	.tab__content {
+	.tabs__content {
 	  position: absolute;
 	  top: 35px;
 	  left: 0;
@@ -168,14 +226,13 @@
 	  right: 0;
 	  bottom: 0;
 	  padding: 20px;
-	  /* border: 1px solid #ccc; */
 	}
 
-
-
-	.tab > [type=radio]:checked ~ .tab__label ~ .tab__content {
+	.tabs > [type=radio]:checked ~ .tabs__label ~ .tabs__content {
 	  z-index: 1;
 	}
+	*/
+
 
 }
 
@@ -183,7 +240,7 @@
 /*
 .header-primary .container .logo,
 .header-primary .container .menu {
-  display: table-cell;
+  display: tabsle-cell;
   padding: 0 15px;
   vertical-align: middle;
 }

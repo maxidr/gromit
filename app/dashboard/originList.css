@@ -9,7 +9,8 @@
 	}
 
 	&__title {
-
+		margin-bottom: 10px;
+		text-align: center;
 	}
 
 	&__explanation {
@@ -37,6 +38,7 @@
 
 	&__add-new {
 		//display: inline-block;
-		@mixin link;
+		@mixin button;
+		display: inline;
 	}
 }
