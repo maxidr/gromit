@@ -1,10 +1,13 @@
 import m from 'mithril'
 import './originList.css'
+import spinner from '../ui/spinner'
+import backend from '../backend/users'
 
 const state = {
 	showNewOriginInput: m.prop(false),
 	originInputValue: m.prop(''),
-	focusOriginInputValue: false
+	focusOriginInputValue: false,
+	updatingUser: m.prop(false)
 }
 
 function focus(el, isInit){
@@ -19,7 +22,13 @@ const addOriginToUser = user => () => {
 	user.originList.push(state.originInputValue())
 	state.originInputValue('')
 	state.focusOriginInputValue = true
-	//m.redraw()
+	state.updatingUser(false)
+	backend.update(user)
+		.then(state.updatingUser.bind(false))
+	/*
+	state.originInputValue('')
+	state.focusOriginInputValue = true
+	*/
 	return false
 }
 
@@ -29,7 +38,7 @@ const newOriginInput = (user) => m('.origins-config__origin-field', [
 			{ config: focus, placeholder: 'Enter an URL',
 				onchange: m.withAttr('value', state.originInputValue),
 				value: state.originInputValue(), tabindex: 1 }),
-		m('button[type=submit].origin-field__add', { tabindex: 2 }, 'add origin'),
+		m('button[type=submit].origin-field__add', { tabindex: 2 }, 'add origin')
 	])
 ])
 

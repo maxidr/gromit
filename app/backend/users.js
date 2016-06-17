@@ -25,6 +25,7 @@ users.login         = (user) => request('POST', '/users/token', usernameAndPassw
 users.register      = (user) => request('POST', '/users/signUp', { data: { email: user.email(), password: user.password() }})
 users.resetPassword = (user) => request('POST', '/users/reset', usernameAndPassword(user))
 users.logout        = (user) => request('DELETE', '/users/current')
+users.update 				= (user) => request('PUT', '/users/current', { data: user })
 users.fetch         = () => {
   console.log('fetch user')
   return request('GET', '/users/current', { background: true })
