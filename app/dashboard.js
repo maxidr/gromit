@@ -1,7 +1,7 @@
 import m from 'mithril';
 const user = require('./backend/users')
 const session = require('../lib/session')
-const spinner = require('./ui/spinner')
+import { page as spinner } from './ui/spinner'
 const Clipboard = require('clipboard')
 
 import originList from './dashboard/originList'
@@ -9,45 +9,42 @@ import originList from './dashboard/originList'
 //require('../css/dashboard.css')
 require('./dashboard.css')
 
-//const JSONFormatter = require('json-formatter-js/src/index.js')
 import JSONFormatter from 'json-formatter-js'
-//import JSONFormatter from 'json-formatter-js'
-//require('json-formatter-js/dist/style.css')
 
 const dashboard = {}
 
 const copyToClipboardClicked = (() => {
-  let copyToClipboardClicked = false;
+	let copyToClipboardClicked = false;
 
-  return (...args) => {
-    if( args.length === 0 ){ return copyToClipboardClicked }
-    copyToClipboardClicked = args[0];
-    if( copyToClipboardClicked ){
-      setTimeout(() => {
-        copyToClipboardClicked = false; m.redraw()
-      }, 3000)
-    }
-  }
+	return (...args) => {
+		if( args.length === 0 ){ return copyToClipboardClicked }
+		copyToClipboardClicked = args[0];
+		if( copyToClipboardClicked ){
+			setTimeout(() => {
+				copyToClipboardClicked = false; m.redraw()
+			}, 3000)
+		}
+	}
 })()
 
 dashboard.controller = function() {
-  const ctrl = this
+	const ctrl = this
 
-  ctrl.user = m.prop()
+	ctrl.user = m.prop()
 	ctrl.serviceResponse = m.prop()
 
-  m.startComputation();
-  user.fetch().then(function(user){
-    ctrl.user(user)
+	//m.startComputation();
+	user.fetch().then(function(user){
+		ctrl.user(user)
 		return m.request({ method: 'GET', url: 'https://' + user.projectKey + '.gromit.io/api', background: true })
 			.then(ctrl.serviceResponse)
-			.then(m.endComputation)
-  }).catch(function(){
-    console.log('Fetch user fails, redirect to home /');
-    session(null)
-    m.endComputation()
-    m.route('/')
-  })
+			.then(m.redraw)
+	}).catch(function(){
+		console.log('Fetch user fails, redirect to home /');
+		session(null)
+		m.endComputation()
+		m.route('/')
+	})
 
 }
 
@@ -55,28 +52,28 @@ dashboard.controller = function() {
 
 function renderJSON(json){
 	return function(element, initialize){
-	  if( ! initialize ){
-	    var jsonFormat = new JSONFormatter(json, 2, {
+		if( ! initialize ){
+			var jsonFormat = new JSONFormatter(json, 2, {
 				theme: 'dark'
 			})
-	    element.appendChild(jsonFormat.render())
-	  }
+			element.appendChild(jsonFormat.render())
+		}
 	}
 }
 
 
 // FROM http://markup.su/highlighter/
 function jqueryExample(key){
-  return m('.jquery-example', [
-    m.trust('<pre style="background:#0c1021;color:#f8f8f8">' +
-            '<span style="color:#fbde2d">$</span>.get(<span style="color:#61ce3c">' +
-            '"https://' + key + '.gromit.io/api"' + '</span>).then(<span style="color:#fbde2d">function</span>(response){' +
-            "<span style='display: block; padding-left: 2em;'>" +
-            '<span style="color:#ff6400;">console</span><span style="color:#8da6ce">.log</span>(response.<span style="color:#8da6ce">location</span>)' +
-            '</span>' +
-            "<span style='display: block'>})</span>" +
-            "</pre>")
-  ])
+	return m('.jquery-example', [
+		m.trust('<pre style="background:#0c1021;color:#f8f8f8">' +
+						'<span style="color:#fbde2d">$</span>.get(<span style="color:#61ce3c">' +
+						'"https://' + key + '.gromit.io/api"' + '</span>).then(<span style="color:#fbde2d">function</span>(response){' +
+						"<span style='display: block; padding-left: 2em;'>" +
+						'<span style="color:#ff6400;">console</span><span style="color:#8da6ce">.log</span>(response.<span style="color:#8da6ce">location</span>)' +
+						'</span>' +
+						"<span style='display: block'>})</span>" +
+						"</pre>")
+	])
 }
 
 /*
@@ -100,8 +97,8 @@ const tabs = contents => m('.tabs',
 )
 
 const examplesView = ( user, serviceResponse ) => m('.how-to', [
-	m('h2', 'How to use your API'),
-	m('ul',
+	m('h2.how-to__title', 'How to use your API'),
+	m('ul.how-to__list',
 		m('li', [
 			m('.label', 'Endpoint'),
 			m('.value', 'https://' + user.projectKey + '.gromit.io/api'),
@@ -126,12 +123,12 @@ const examplesView = ( user, serviceResponse ) => m('.how-to', [
 ])
 
 const renderInfo = (user, serviceResponse) => [
-  m('h2', [ 'Welcome', m('span.account', user.email) ]),
-  m('ul', [
-    m('li', [ m('.label', 'Your key'), m('.value', user.projectKey) ]),
-    m('li', [ m('.label', 'Plan'), m('.value', user.plan) ]),//[ user.plan, m('a.upgrade-plan', 'Upgrade your plan') ])
-    m('li', [ m('.label', 'Already used'), m('.value', formatNumber(user.usages, '.')) ])
-  ]),
+	m('h2', [ 'Welcome', m('span.account', user.email) ]),
+	m('ul.config-list', [
+		m('li', [ m('.label', 'Your key'), m('.value', user.projectKey) ]),
+		m('li', [ m('.label', 'Plan'), m('.value', user.plan) ]),//[ user.plan, m('a.upgrade-plan', 'Upgrade your plan') ])
+		m('li', [ m('.label', 'Already used'), m('.value', formatNumber(user.usages, '.')) ])
+	]),
 	tabs([
 		{
 			title: 'Examples',
@@ -145,35 +142,35 @@ const renderInfo = (user, serviceResponse) => [
 ]
 
 function formatNumber(number, separator) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
 const header = () => m('header.header-primary', [
-  m('.container', [
-    m('.logo', [ 'Gromit', m('b', '.io') ]),
-    m('ul.menu', [
-      m('li', m('a[href="/logout"]', { config: m.route }, 'Logout'))
-    ])
-  ])
+	m('.container', [
+		m('.logo', [ 'Gromit', m('b', '.io') ]),
+		m('ul.menu', [
+			m('li', m('a[href="/logout"]', { config: m.route }, 'Logout'))
+		])
+	])
 ])
 
 function loadClipboard(element, isInitialized){
-  if( ! isInitialized ){
-    const clipboard = new Clipboard('.copy-to-clipboard');
-    clipboard.on('success', function(){
-      copyToClipboardClicked(true)
-      m.redraw()
-    })
-  }
+	if( ! isInitialized ){
+		const clipboard = new Clipboard('.copy-to-clipboard');
+		clipboard.on('success', function(){
+			copyToClipboardClicked(true)
+			m.redraw()
+		})
+	}
 }
 
 dashboard.view = (ctrl) => {
-  return m('.fullscreen-content', { config: loadClipboard }, [
-    header(),
-    m('.content.dashboard',[
-      ctrl.user() ? renderInfo(ctrl.user(), ctrl.serviceResponse()) : m(spinner)
-    ])
-  ])
+	return m('.fullscreen-content', { config: loadClipboard }, [
+		header(),
+		m('.content.dashboard',[
+			ctrl.user() ? renderInfo(ctrl.user(), ctrl.serviceResponse()) : m(spinner)
+		])
+	])
 }
 
 

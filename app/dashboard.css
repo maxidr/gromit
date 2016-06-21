@@ -1,30 +1,30 @@
 @import 'shared';
 
 .fullscreen-content {
-  height: 100vh;
-  width: 100%;
-  background: white;
+	height: 100vh;
+	width: 100%;
+	background: white;
 }
 
 .header-primary {
-  background-color: rgba(0,0,0,0.6);
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
+	background-color: rgba(0,0,0,0.6);
+	position: fixed;
+	top: 0; left: 0;
+	width: 100%;
 	z-index: 3;
 
 	.container {
-	  display: table;
-	  width: 100%;
-	  margin: 0 10px;
+		display: table;
+		width: 100%;
+		margin: 0 10px;
 	}
 
 	b { color: $red; }
 
 	.logo, .menu {
 		display: table-cell;
-	  padding: 0 15px;
-	  vertical-align: middle;
+		padding: 0 15px;
+		vertical-align: middle;
 	}
 
 	.logo { text-align: left; font-size: 20px; color: white; }
@@ -44,47 +44,47 @@
 	h2 { font-weight: 100; }
 	h2 > .account { margin-left: 0.5em; font-weight: 600; }
 
-	ul { list-style: none; display: inline-block; }
-	ul li { text-align: left; }
+	.config-list { list-style: none; display: inline-block; }
+	.config-list > li { text-align: left; }
 
 	ul li .label {
-	  margin-right: 15px;
-	  color: #7B7B7B;
-	  font-size: 13px;
-	  display: inline-block;
-	  min-width: 10em;
-	  text-align: right;
+		margin-right: 15px;
+		color: #7B7B7B;
+		font-size: 13px;
+		display: inline-block;
+		min-width: 10em;
+		text-align: right;
 	}
 	ul li .value { font-weight: 600; display: inline; }
 
 
-	.how-to ul { text-align: center; }
-	.how-to ul li .label { min-width: auto; }
+	.how-to__list { text-align: center; list-style: none; }
+	.how-to__list > .label { min-width: auto; }
 
 	.copy-to-clipboard {
-	  margin-left: 20px;
-	  color: #BDBDBD;
-	  font-size: 13px;
-	  display: inline-block;
-	  text-align: right;
-	  transition: color 0.5s ease;
+		margin-left: 20px;
+		color: #BDBDBD;
+		font-size: 13px;
+		display: inline-block;
+		text-align: right;
+		transition: color 0.5s ease;
 	}
 
 	.copy-to-clipboard:hover {
-	  transition: color 0.5s ease;
-	  color: #4C4C4C;
+		transition: color 0.5s ease;
+		color: #4C4C4C;
 	}
 
 	.jquery-example {
-	  display: inline-block;
-	  padding: 10px;
-	  font-size: 16px;
-	  text-align: left;
+		display: inline-block;
+		padding: 10px;
+		font-size: 16px;
+		text-align: left;
 	}
 
 	.jquery-example > pre {
-    padding: 10px 20px;
-    border-radius: 4px;
+		padding: 10px 20px;
+		border-radius: 4px;
 	}
 
 	.btn {
@@ -95,13 +95,13 @@
 
 	.json-result {
 		background-color: #0C1021;
-    border-radius: 4px;
-    text-align: left;
-    width: 80%;
-    margin: 0 auto;
-    padding: 10px 20px;
-    margin-top: 30px;
-    font-size: 15px;
+		border-radius: 4px;
+		text-align: left;
+		width: 80%;
+		margin: 0 auto;
+		padding: 10px 20px;
+		margin-top: 30px;
+		font-size: 15px;
 		overflow: scroll;
 
 		h2 {
@@ -145,7 +145,7 @@
 		width: 100%;
 		margin: 2.3em 0 0 -100%;
 		position: relative;
-	  z-index: 1;
+		z-index: 1;
 		border-top: 1px solid #f3f3f3;
 		padding-top: 20px;
 	}
@@ -163,7 +163,7 @@
 		-webkit-user-select : none;
 		padding: 10px 10px 3px 10px;
 		padding: 8px 5px;
-	  position: relative;
+		position: relative;
 		margin-right: 15px;
 		font-size: 1em;
 		cursor: pointer;
@@ -173,26 +173,26 @@
 
 /*
 	.tabs > input:checked + section > h1{
-	  position : relative;
-	  z-index  : 2;
+		position : relative;
+		z-index  : 2;
 	}
 */
 /*
 	.tabss {
-	  position: relative;
-	  min-height: 200px;
-	  clear: both;
-	  margin: 25px 0;
+		position: relative;
+		min-height: 200px;
+		clear: both;
+		margin: 25px 0;
 	}
 
 	.tabs {
-	  float: left;
+		float: left;
 		display: inline-block;
 	}
 
 	.tabs__label {
 		padding: 10px 10px 3px 10px;
-	  position: relative;
+		position: relative;
 		margin-right: 15px;
 		font-size: .8em;
 		cursor: pointer;
@@ -206,7 +206,7 @@
 	.tabs > [type=radio]:checked ~ .tabs__label {
 		padding: 8px 10px;
 		border-radius: 4px;
-	  z-index: 2;
+		z-index: 2;
 		background: $red;
 		color: #fff;
 		cursor: default;
@@ -215,21 +215,21 @@
 	.tabs > [type=radio]:checked ~ .tabs__label:hover { border-bottom: none; }
 
 	.tabs > [type=radio] {
-	  display: none;
+		display: none;
 	}
 
 	.tabs__content {
-	  position: absolute;
-	  top: 35px;
-	  left: 0;
-	  background: white;
-	  right: 0;
-	  bottom: 0;
-	  padding: 20px;
+		position: absolute;
+		top: 35px;
+		left: 0;
+		background: white;
+		right: 0;
+		bottom: 0;
+		padding: 20px;
 	}
 
 	.tabs > [type=radio]:checked ~ .tabs__label ~ .tabs__content {
-	  z-index: 1;
+		z-index: 1;
 	}
 	*/
 
@@ -240,8 +240,8 @@
 /*
 .header-primary .container .logo,
 .header-primary .container .menu {
-  display: tabsle-cell;
-  padding: 0 15px;
-  vertical-align: middle;
+	display: tabsle-cell;
+	padding: 0 15px;
+	vertical-align: middle;
 }
 */

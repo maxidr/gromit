@@ -1,7 +1,23 @@
 import m from 'mithril'
 import './originList.css'
-import spinner from '../ui/spinner'
+import { inline as spinner } from '../ui/spinner'
 import backend from '../backend/users'
+
+
+/*
+(function mock(){
+	const originalReq = m.request
+	m.request = (...attrs) => {
+		const conf = attrs[0]
+		if( conf.method !== 'PUT' ){ return originalReq.apply(null, attrs) }
+		const deferred = m.deferred();
+		setTimeout(function() {
+			deferred.resolve(conf.data);
+		}, 3000);
+		return deferred.promise;
+	}
+})();
+*/
 
 const state = {
 	showNewOriginInput: m.prop(false),
@@ -18,27 +34,31 @@ function focus(el, isInit){
 }
 
 const addOriginToUser = user => () => {
-	if( ! user.originList ){ user.originList = [] }
-	user.originList.push(state.originInputValue())
-	state.originInputValue('')
-	state.focusOriginInputValue = true
-	state.updatingUser(false)
-	backend.update(user)
-		.then(state.updatingUser.bind(false))
-	/*
-	state.originInputValue('')
-	state.focusOriginInputValue = true
-	*/
+	state.updatingUser(true)
+
+	setTimeout(function() {
+		m.startComputation()
+		if( ! user.originList ){ user.originList = [] }
+		user.originList.push(state.originInputValue())
+		
+		backend.update(user)
+			.then(state.originInputValue.bind(null, ''))
+			.then(() => { state.focusOriginInputValue = true })
+			.then(state.updatingUser.bind(null, false))
+			.then(m.endComputation)
+	}, 10);
+
 	return false
 }
+
 
 const newOriginInput = (user) => m('.origins-config__origin-field', [
 	m('form', { onsubmit: addOriginToUser(user) }, [
 		m('input[type=url].origin-field__input-new',
 			{ config: focus, placeholder: 'Enter an URL',
 				onchange: m.withAttr('value', state.originInputValue),
-				value: state.originInputValue(), tabindex: 1 }),
-		m('button[type=submit].origin-field__add', { tabindex: 2 }, 'add origin')
+				value: state.originInputValue(), tabindex: 1, disabled: state.updatingUser() }),
+		state.updatingUser() ? m(spinner) : m('button[type=submit].origin-field__add', { tabindex: 2 }, 'add origin')
 	])
 ])
 
@@ -46,10 +66,9 @@ const newOriginInput = (user) => m('.origins-config__origin-field', [
 const view = user => m('.origins-config', [
 	m('h2.origins-config__title', 'Origin configured list'),
 	m('.origins-config__explanation', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et faucibus metus. Donec pulvinar varius nisl, ac feugiat magna vestibulum eu. Nunc tincidunt scelerisque nibh vel bibendum. Curabitur ipsum dolor, ornare id elit id, varius efficitur nunc. Sed ut velit turpis. Nulla eget rutrum nulla, vel viverra dolor. Phasellus aliquet finibus imperdiet. Fusce tellus nunc, tempus sit amet massa in, malesuada congue risus.'),
-	m('ul', (user.originList || []).map(origin => m('li', origin))),
-	state.showNewOriginInput() ? newOriginInput(user) : null,
-	m('a.origins-config__add-new',
-		{ onclick: state.showNewOriginInput.bind(null, true), tabindex: 3 }, 'input new origin')
+	m('ul.origins-config__origins', (user.originList || []).map(origin => m('li', origin))),
+	state.showNewOriginInput() ? newOriginInput(user) : m('a.origins-config__add-new', { 
+		onclick: state.showNewOriginInput.bind(null, true), tabindex: 3 }, 'input new origin')
 ])
 
 export default view
