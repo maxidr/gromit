@@ -7,3 +7,10 @@
 
 Username: maxidr@gromit.io
 Password: gromit+io
+
+## Deploy
+
+```
+npm run build 
+node deployer.js
+```
