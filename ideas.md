@@ -8,7 +8,10 @@ https://www.mapbox.com/maps/
 
 https://www.toptal.com/javascript/a-map-to-perfection-using-d3-js-to-make-beautiful-web-maps
 
-d3 globe
+# d3 globe
 http://bl.ocks.org/mbostock/ba63c55dd2dbc3ab0127
 
 http://openlayers.org/
+
+# Styles examples:
+http://sierra-library.github.io/

@@ -4,12 +4,19 @@ const session = require('../lib/session')
 import { page as spinner } from './ui/spinner'
 const Clipboard = require('clipboard')
 
-import originList from './dashboard/originList'
-
+import originListView from './dashboard/originListView'
+import ipListView from './dashboard/ipListView'
 //require('../css/dashboard.css')
 require('./dashboard.css')
 
 import JSONFormatter from 'json-formatter-js'
+
+
+m.deferred.onerror = function(e) {
+	console.log("Error: " + e.message)
+	console.log(e.stack)
+}
+
 
 const dashboard = {}
 
@@ -32,19 +39,23 @@ dashboard.controller = function() {
 
 	ctrl.user = m.prop()
 	ctrl.serviceResponse = m.prop()
+	ctrl.originListView = originListView(ctrl.user)
+	ctrl.ipListView = ipListView(ctrl.user)
 
-	//m.startComputation();
-	user.fetch().then(function(user){
-		ctrl.user(user)
-		return m.request({ method: 'GET', url: 'https://' + user.projectKey + '.gromit.io/api', background: true })
-			.then(ctrl.serviceResponse)
-			.then(m.redraw)
-	}).catch(function(){
-		console.log('Fetch user fails, redirect to home /');
-		session(null)
-		m.endComputation()
-		m.route('/')
-	})
+	m.startComputation()
+	user.fetch()
+		.then(ctrl.user)
+		// TODO: Si el request GET falla, el dashboard debería funcionar de todos modos
+		.then(user => {
+			return m.request({ method: 'GET', url: 'https://' + user.projectKey + '.gromit.io/api', background: true })
+				.then(ctrl.serviceResponse)
+				.then(m.endComputation)
+		}).catch(function(){
+			console.log('Fetch user fails, redirect to home /');
+			session(null)
+			m.endComputation()
+			m.route('/')
+		})
 
 }
 
@@ -122,24 +133,34 @@ const examplesView = ( user, serviceResponse ) => m('.how-to', [
 	])
 ])
 
-const renderInfo = (user, serviceResponse) => [
-	m('h2', [ 'Welcome', m('span.account', user.email) ]),
-	m('ul.config-list', [
-		m('li', [ m('.label', 'Your key'), m('.value', user.projectKey) ]),
-		m('li', [ m('.label', 'Plan'), m('.value', user.plan) ]),//[ user.plan, m('a.upgrade-plan', 'Upgrade your plan') ])
-		m('li', [ m('.label', 'Already used'), m('.value', formatNumber(user.usages, '.')) ])
-	]),
-	tabs([
-		{
-			title: 'Examples',
-			visible: true,
-			body: examplesView(user, serviceResponse)
-		},{
-			title: 'Config',
-			body: originList(user)
-		}
-	])
-]
+
+const renderInfo = ctrl => {
+	const user = ctrl.user()
+	const serviceResponse = ctrl.serviceResponse()
+	const originListView = ctrl.originListView
+	const ipListView = ctrl.ipListView
+	return [
+		m('h2', [ 'Welcome', m('span.account', user.email) ]),
+		m('ul.config-list', [
+			m('li', [ m('.label', 'Your key'), m('.value', user.projectKey) ]),
+			m('li', [ m('.label', 'Plan'), m('.value', user.plan) ]),//[ user.plan, m('a.upgrade-plan', 'Upgrade your plan') ])
+			m('li', [ m('.label', 'Already used'), m('.value', formatNumber(user.usages, '.')) ])
+		]),
+		tabs([
+			{
+				title: 'Examples',
+				visible: true,
+				body: examplesView(user, serviceResponse)
+			},{
+				title: 'Origin list',
+				body: originListView(user.originList)
+			},{
+				title: 'IP list',
+				body: ipListView(user.ipList)
+			}
+		])
+	]
+}
 
 function formatNumber(number, separator) {
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
@@ -168,7 +189,7 @@ dashboard.view = (ctrl) => {
 	return m('.fullscreen-content', { config: loadClipboard }, [
 		header(),
 		m('.content.dashboard',[
-			ctrl.user() ? renderInfo(ctrl.user(), ctrl.serviceResponse()) : m(spinner)
+			ctrl.user() ? renderInfo(ctrl) : m(spinner)
 		])
 	])
 }
