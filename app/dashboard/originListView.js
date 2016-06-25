@@ -1,4 +1,3 @@
-import './originList.css'
 import backend from '../backend/users'
 import { reject, equals as eq } from 'ramda'
 import editableList from './editableList'

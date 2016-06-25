@@ -1,9 +1,9 @@
 @import '../shared';
 
-.origins-config {
+.editable-list {
 	text-align: left;
 
-	&__origin-field {
+	&__field {
 		display: block;
 		margin: 10px 0 15px 0;
 	}
@@ -21,13 +21,13 @@
 		margin-bottom: 15px;
 	}
 
-	&__origins {
+	&__items {
 		display: block;
 		list-style: none;
 		margin-bottom: 15px;
 	}
 
-	.origin-field__input-new {
+	.field__input-new {
 		display: inline-block;
 		width: 40%;
 		border: 1px solid #ccc;
@@ -37,12 +37,12 @@
 		border-radius: 4px;
 	}
 
-	.origin-field__add {
+	.field__add {
 		margin-left: 10px;
 		@mixin link;
 	}
 
-	.origin-field__error {
+	.field__error {
 		color: red;
 		font-weight: 100;
 		font-size: 13px;
@@ -52,33 +52,35 @@
 		@mixin button;
 		display: inline-block;
 	}
-}
 
+	&__item {
+		&__pre-icon {
+			margin: 0 5px;
+			position: relative;
+			bottom: -2px;
+			color: $red;
+		}
+		&__url {
+			display: inline-block;
+		}
+		&__remove {
+			display: inline-block;
+			margin-left: 15px;
+			text-transform: uppercase;
+			font-size: 0.7em;
+			opacity: 0;
 
-.origin-item {
-	&__pre-icon {
-		margin: 0 5px;
-		position: relative;
-		bottom: -2px;
-		color: $red;
-	}
-	&__url {
-		display: inline-block;
-	}
-	&__remove {
-		display: inline-block;
-		margin-left: 15px;
-		text-transform: uppercase;
-		font-size: 0.7em;
-		opacity: 0;
+			&:hover {
+				border-bottom: 3px solid $red;
+				opacity: 1;
+			}
+		}
 
-		&:hover {
-			border-bottom: 3px solid $red;
-			opacity: 1;
+		&:hover .item__remove {
+			opacity: 0.7;
 		}
 	}
 
-	&:hover .origin-item__remove {
-		opacity: 0.7;
-	}
 }
+
+

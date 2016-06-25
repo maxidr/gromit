@@ -1,5 +1,5 @@
 import m from 'mithril'
-import './originList.css'
+import './editableList.css'
 import { inline as spinner } from '../ui/spinner'
 
 /**
@@ -54,12 +54,6 @@ export default function(api = {}){
 		return false
 	}
 
-	const validate = maybeIP => {
-		return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
-			.test(maybeIP) ? null : 'Invalid IP'
-	}
-
-
 	const addItemToModel = () => {
 
 		vm.invalidInputMsg = api.validateInput(vm.inputValue())
@@ -82,33 +76,33 @@ export default function(api = {}){
 	}
 
 
-	const newItemInput = () => m('.origins-config__origin-field', [
+	const newItemInput = () => m('.editable-list__field', [
 		m('form', { onsubmit: addItemToModel }, [
-			m('input[type=text].origin-field__input-new',
+			m('input[type=text].field__input-new',
 				{ config: focus, placeholder: api.inputPlaceholder,
 					onchange: m.withAttr('value', vm.inputValue),
 					value: vm.inputValue(), tabindex: 1, disabled: vm.syncingItemAdded() }),
-			vm.syncingItemAdded() ? m(spinner) : m('button[type=submit].origin-field__add', { tabindex: 2 }, `add ${api.itemName}`),
-			vm.invalidInputMsg ? m('.origin-field__error', vm.invalidInputMsg) : null
+			vm.syncingItemAdded() ? m(spinner) : m('button[type=submit].field__add', { tabindex: 2 }, `add ${api.itemName}`),
+			vm.invalidInputMsg ? m('.field__error', vm.invalidInputMsg) : null
 		])
 	])
 
 	const itemView = item => {
 		const isRemoving = vm.syncingItemRemoved() === item 
-		return m('li.origin-item', [
-			m('i.origin-item__pre-icon.icon-dots-three-vertical'),
-			m('.origin-item__url', item),
+		return m('li.editable-list__item', [
+			m('i.editable-list__item__pre-icon.icon-dots-three-vertical'),
+			m('.editable-list__item__url', item),
 			isRemoving ? m(spinner) 
-				: m('a.origin-item__remove', { onclick: removeItemFromModel(item) }, 'remove')
+				: m('a.editable-list__item__remove', { onclick: removeItemFromModel(item) }, 'remove')
 		])
 	}
 
-	const view = (list) => m('.origins-config', [
-		m('h2.origins-config__title', api.title),
-		m('.origins-config__explanation', api.explanation),
-		m('ul.origins-config__origins', (list || []).map(itemView)),
+	const view = (list) => m('.editable-list', [
+		m('h2.editable-list__title', api.title),
+		m('.editable-list__explanation', api.explanation),
+		m('ul.editable-list__items', (list || []).map(itemView)),
 		vm.showInput() ? newItemInput() 
-			: m('a.origins-config__add-new', { onclick: vm.showInput.bind(null, true), tabindex: 3 }, `input new ${api.itemName}`)
+			: m('a.editable-list__add-new', { onclick: vm.showInput.bind(null, true), tabindex: 3 }, `input new ${api.itemName}`)
 	])
 
 	return view
