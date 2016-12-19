@@ -1,0 +1,65 @@
+@keyframes vex-flyin {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+    -webkit-transform: translateY(-40px);
+    -moz-transform: translateY(-40px);
+    -ms-transform: translateY(-40px);
+    -o-transform: translateY(-40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+  }
+}
+
+@keyframes vex-flyout {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-40px);
+    -webkit-transform: translateY(-40px);
+    -moz-transform: translateY(-40px);
+    -ms-transform: translateY(-40px);
+    -o-transform: translateY(-40px);
+  }
+}
+
+@keyframes fade-out {
+  0%   { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+// transition: opacity .4s, visibility .4s ease-in-out;
+@keyframes fade-in {
+  0% { opacity: 0; visibility: hidden; }
+  100% { opacity: 1; visibility: visible; }
+}
+
+.modal__panel { animation: vex-flyin .5s; }
+.modal--closed .modal__panel { animation: vex-flyout .5s; }
+
+//.modal { animation: fade-out .4s ease-in-out; }
+//.modal--closed { animation: fade-in .4s ease-in-out; }
+
+.modal {
+  opacity: 1; visibility: visible;
+  transition: opacity .4s, visibility .4s ease-in-out;
+}
+.modal--closed {
+  opacity: 0; visibility: hidden;
+  transition: opacity .4s, visibility .4s ease-in-out;
+}

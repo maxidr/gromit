@@ -1,0 +1,36 @@
+
+.modal {
+  z-index: 9999;
+  width: 40%;
+  height: 200px;
+  margin: 0 auto;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -20%;
+  margin-top: -120px;
+}
+
+.modal__overlay {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.4);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.modal__panel {
+  background: #f3f3f3;
+  color: #303030;
+  border-radius: 5px;
+  position: relative;
+  padding: 25px;
+}
+
+.modal__close { 
+  float: right;
+  font-weight: 600;
+}
+
+.modal__content {}

@@ -40,7 +40,7 @@
     "clipboard": "1.5.10",
     "json-formatter-js": "1.0.0",
     "m-validator": "1.0.0",
-    "mithril": "0.2.3",
+    "mithril": "0.2.5",
     "mithril-validator": "1.1.0",
     "ramda": "0.21.0"
   }

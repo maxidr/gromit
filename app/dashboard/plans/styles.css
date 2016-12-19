@@ -1,0 +1,42 @@
+.content {
+  padding: 50px 25px 25px 25px;
+}
+
+
+.column {
+  float: left;
+  width: 25%;
+  padding: 8px;
+}
+
+.plan-block {
+  list-style-type: none;
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;  
+}
+
+.plan-block:hover { box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2) }
+
+.plan-block > .header {
+  background-color: #7e78da;
+  color: white;
+  font-size: 25px;
+}
+
+.plan-block > .price {
+  background-color: #eee;
+  font-size: 20px;
+}
+
+.plan-block li {
+  border-bottom: 1px solid #eee;
+  padding: 20px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .column { width: 100%; }
+}

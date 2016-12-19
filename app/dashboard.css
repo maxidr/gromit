@@ -37,6 +37,12 @@
 	}
 }
 
+.btn {
+	@extend button;
+	padding: 10px 15px;
+	margin-top: 25px;
+}
+
 .dashboard {
 	padding: 50px 25px 25px 25px;
 	text-align: center;
@@ -85,12 +91,6 @@
 	.jquery-example > pre {
 		padding: 10px 20px;
 		border-radius: 4px;
-	}
-
-	.btn {
-		@mixin button;
-		padding: 10px 15px;
-		margin-top: 25px;
 	}
 
 	.json-result {
@@ -170,78 +170,5 @@
 		text-transform: uppercase;
 	}
 
-
-/*
-	.tabs > input:checked + section > h1{
-		position : relative;
-		z-index  : 2;
-	}
-*/
-/*
-	.tabss {
-		position: relative;
-		min-height: 200px;
-		clear: both;
-		margin: 25px 0;
-	}
-
-	.tabs {
-		float: left;
-		display: inline-block;
-	}
-
-	.tabs__label {
-		padding: 10px 10px 3px 10px;
-		position: relative;
-		margin-right: 15px;
-		font-size: .8em;
-		cursor: pointer;
-		text-transform: uppercase;
-	}
-
-	.tabs__label:hover {
-		border-bottom: 3px solid $red;
-	}
-
-	.tabs > [type=radio]:checked ~ .tabs__label {
-		padding: 8px 10px;
-		border-radius: 4px;
-		z-index: 2;
-		background: $red;
-		color: #fff;
-		cursor: default;
-	}
-
-	.tabs > [type=radio]:checked ~ .tabs__label:hover { border-bottom: none; }
-
-	.tabs > [type=radio] {
-		display: none;
-	}
-
-	.tabs__content {
-		position: absolute;
-		top: 35px;
-		left: 0;
-		background: white;
-		right: 0;
-		bottom: 0;
-		padding: 20px;
-	}
-
-	.tabs > [type=radio]:checked ~ .tabs__label ~ .tabs__content {
-		z-index: 1;
-	}
-	*/
-
-
 }
 
-
-/*
-.header-primary .container .logo,
-.header-primary .container .menu {
-	display: tabsle-cell;
-	padding: 0 15px;
-	vertical-align: middle;
-}
-*/

@@ -1,0 +1,13 @@
+@import '../shared';
+
+:local(.planInfo){
+  display: inline;
+}
+
+:local(.subscriptionBtn){
+  @mixin button;
+  display: inline-block;
+  padding: 1px 10px;
+  margin-left: 10px;
+  margin-top: 0;
+}
