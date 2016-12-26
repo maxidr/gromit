@@ -30,7 +30,8 @@ export default function(user){
 		itemName: 'Origin URL',
 		inputPlaceholder: 'Enter an URL',
 
-		validateInput: maybeUrl => URL_REGEX.test(maybeUrl) ? null : 'Invalid URL',
+		//validateInput: maybeUrl => URL_REGEX.test(maybeUrl) ? null : 'Invalid URL',
+		validateInput: maybeUrl => null,
 		
 		onAddItem: item => {
 			if( ! user().originList ){ user().originList = [] }
