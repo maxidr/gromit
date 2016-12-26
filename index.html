@@ -17,5 +17,20 @@
     <!-- replace:js -->
     <script type="text/javascript" src="/dist/bundle.js"></script>
     <!-- endreplace -->
+    <script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
+    <script type="text/javascript">
+      FreshWidget.init("", {"queryString": "&widgetType=popup", "utf8": "✓", "widgetType": "popup", "buttonType": "text", "buttonText": "SUPPORT", "buttonColor": "white", "buttonBg": "#fc2940", "alignment": "3", "offset": window.innerWidth - 120 + "px", "formHeight": "500px", "url": "https://gromit.freshdesk.com"} );
+    </script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-80995199-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
   </body>
 </html>

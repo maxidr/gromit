@@ -74,12 +74,12 @@ module.exports = {
    *     }
    *
    */
-  current: () => request('GET', '/users/current/subscription'),
+  current: () => request('GET', '/users/current/subscription', { background: true }),
   /**
    * Fetch all the available plans
    * @return {Promise} A promise that returns a {@type Plan[]} if resolved
    */
-  plans: () => request('GET', '/users/plans'),
+  plans: () => request('GET', '/users/plans', { background: true }),
 
   /**
    * 

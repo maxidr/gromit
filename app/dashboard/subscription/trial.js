@@ -29,9 +29,9 @@ const remainingTimeMessage = conditions([
   [ moreThan(1),   days => `Remaining ${days} days` ]
 ])
 
-module.exports = { view, mapViewModel }
+module.exports = { view, viewModel }
 
-function mapViewModel(data){
+function viewModel(data){
   return {
     startedAt: creationDate(data).toLocaleDateString(),
     remainingDays: pipe(creationDate, date => addDays(date, TRIAL_TERM_DAYS), remainingDays)(data),

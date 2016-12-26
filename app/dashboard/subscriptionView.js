@@ -22,25 +22,17 @@ const selector = conditions([
 ])
 
 function withSubscriptionView(data){
-  const view = subscriptionTypeView[data.projectPlan.type]
-  const vm = subscriptionTypeViewModelMap[data.projectPlan.type]
+  const { view, viewModel } = resolveDetailsView(data.projectPlan.type)
+
   return m(`div.${styles.planInfo}`, [ 
     m('div', data.projectPlan.name),
-    view(vm(data)),
+    view(viewModel(data)),
     m(`a.${styles.subscriptionBtn}`, { onclick: e => m.route('/change-plan') }, 'change plan')
-    //new Date(data.subscription.createdTime)
-    //toLocaleDateString
-    //data.projectPlan.type === 'trial'
   ])
 }
 
-
-const subscriptionTypeViewModelMap = {
-  trial: require('./subscription/trial').mapViewModel
-}
-
-const subscriptionTypeView = {
-  trial: require('./subscription/trial').view
+const resolveDetailsView = planType => {
+  return planType === 'trial' ? require('./subscription/trial') : require('./subscription/paydPlan')
 }
 
 

@@ -32,6 +32,10 @@ body {
   min-width: 400px;
 }
 
+strong {
+  color: #404040;
+}
+
 .txt-ac { text-align: center; }
 
 .hidden {

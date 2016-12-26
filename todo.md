@@ -1,3 +1,6 @@
-- [ ] Add deployer script on package.json to run the production deployment throught npm
-- [ ] Dashboard page is not working outside the mock
-- [ ] Remove the mock (or replace it)
++ [X] Google analitics
++ [X] Agregar Support
++ [X] Sacar text
++ [X] Sacar validacion de location
++ [X] Hacer algo con /#/subscription
+

@@ -18,10 +18,11 @@
   transition: 0.3s;  
 }
 
-.plan-block:hover { box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2) }
+.plan-block:hover, 
+.plan-block.subscribed { box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2) }
 
 .plan-block > .header {
-  background-color: #7e78da;
+  background-color: #404040;
   color: white;
   font-size: 25px;
 }
@@ -35,6 +36,11 @@
   border-bottom: 1px solid #eee;
   padding: 20px;
   text-align: center;
+}
+
+.subscribed-hint {
+  margin-top: 25px;
+  padding: 10px 15px;
 }
 
 @media only screen and (max-width: 600px) {

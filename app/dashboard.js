@@ -67,7 +67,15 @@ dashboard.controller = function() {
 		.then(() => {
 			subscriptions.current()
 				.then(ctrl.subscription)
+				.then(subscription => session({ 
+						subscription: {
+							type: subscription.projectPlan.type
+						}
+					})
+				)
 				.catch(() => ctrl.subscription(null))
+				.then(m.redraw)
+
 		})
 		.then(() => {
 			const user = ctrl.user()
@@ -80,19 +88,6 @@ dashboard.controller = function() {
 					console.error("Fail when try to use the api with the user's key")
 				})
 		})
-		/*
-		// TODO: Si el request GET falla, el dashboard debería funcionar de todos modos
-		.then(user => {
-			return m.request({ method: 'GET', url: 'https://' + user.projectKey + '.gromit.io/api', background: true })
-				.then(ctrl.serviceResponse)
-				.then(m.endComputation)
-		}).catch(function(){
-			console.log('Fetch user fails, redirect to home /');
-			session(null)
-			m.endComputation()
-			m.route('/')
-		})
-		*/
 
 	return ctrl
 }
