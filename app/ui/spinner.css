@@ -1,50 +1,47 @@
-@define-extend spinnerDiv {
-	background-color: #FC2940;
-	border-radius: 100%;
-	display: inline-block;
-	animation: spinner-bounce 1.4s infinite ease-in-out both;
-}
-
-@define-mixin spinnerSize $size: 18 {
-	width: $(size)px;
-	height: $(size)px;
-}
-
-.spinner {
-	
-	&--page {
-		margin: 100px auto 0;
-		width: 70px;
-		text-align: center;
-		& > div {
-			@extend spinnerDiv;
-			@mixin spinnerSize 18
-		}
-	}
-
-	&--inline {
-		display: inline;
-		margin-left: 15px;
-
-		& > div {
-			margin-right: 2px;
-			@extend spinnerDiv;
-			@mixin spinnerSize 15;
-		}
-	}
-
-	.bounce1 {
-		-webkit-animation-delay: -0.32s;
-		animation-delay: -0.32s;
-	}
-
-	.bounce2 {
-		-webkit-animation-delay: -0.16s;
-		animation-delay: -0.16s;
-	}
-}
-
 @keyframes spinner-bounce {
 	0%, 80%, 100% { transform: scale(0); }
 	40% { transform: scale(1.0); }
+}
+
+.spinner > div {
+	background-color: #FC2940;
+	border-radius: 100%;
+	display: inline-block;
+	-webkit-animation: spinner-bounce 1.4s infinite ease-in-out both;
+	        animation: spinner-bounce 1.4s infinite ease-in-out both;
+	width: 15px;
+	height: 15px;
+	margin-right: 2px;
+}
+
+.spinner > .bounce1 {
+	-webkit-animation-delay: -0.32s;
+	animation-delay: -0.32s;
+}
+
+.spinner > .bounce2 {
+	-webkit-animation-delay: -0.16s;
+	animation-delay: -0.16s;
+}
+
+.small-spinner {
+	display: inline;
+	margin-left: 15px;
+}
+
+.medium-spinner {
+	margin: 100px auto 0;
+	width: 70px;
+	text-align: center;
+}
+
+.medium-spinner > div {
+	width: 18px;
+	height: 18px;
+}
+
+.big-spinner > div {
+	height: 25px;
+	width: 25px;
+	margin-right: 10px;
 }

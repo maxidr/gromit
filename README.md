@@ -8,6 +8,23 @@
 Username: maxidr@gromit.io
 Password: gromit+io
 
+## local development
+
+```
+npm start
+```
+
+To use another port:
+```
+npm start -- --port 9090
+```
+
+To change the endpoint of the API type the following in the browser console
+```
+localStorage['gromit.serverUrl'] = 'http://localhost:8080'
+```
+
+
 ## Deploy
 
 ```
@@ -46,3 +63,11 @@ POST /users/current/subcription/suspend
 POST /users/current/subcription/resume
 POST /users/current/subcription/cancel
 GET /users/current/subcription/history
+
+### Enable local account
+
+account: marcelo.marmol@gmail.com
+```
+curl http://localhost:8080/users/signUp?c=3B4C210F4CF27344F6AFB1F811BEC44FEC3067314A4C1CBC04748F15C376AA7A022CB66AAA8E738D7DADBB90D96C06B7E75DB31DC84E6B1F5E032D7E65A46C54&sa=D&sntz=1&usg=AFQjCNFcp9owZnZ0Ve0UxxpOk4iZ3K0YUw
+```
+

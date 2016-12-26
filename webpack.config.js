@@ -10,13 +10,14 @@ module.exports = {
   entry: "./app.js",
 
   //devtool: 'source-map',
-  devtool: 'eval',
+  devtool: 'cheap-module-eval-source-map',
   debug: true,
 
   output: {
     path: path.resolve(__dirname, "dist"),
     publicPath: "/dist/",
-    filename: "bundle.js"
+    filename: "bundle.js",
+    devtoolModuleFilenameTemplate: 'webpack:///[absolute-resource-path]'
   },
 
   module: {

@@ -28,8 +28,8 @@ makeDirectory('deployment/app')
 module.exports = {
   entry: "./app.js",
 
-  devtool: 'cheap-module-source-map',
-  debug: true,
+  devtool: 'hidden-source-map',
+  debug: false,
 
   output: {
     path: path.resolve(__dirname, "deployment", "assets", "[hash]"),

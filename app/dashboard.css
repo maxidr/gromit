@@ -6,6 +6,10 @@
 	background: white;
 }
 
+.link {
+	@mixin link;
+}
+
 .header-primary {
 	background-color: rgba(0,0,0,0.6);
 	position: fixed;
@@ -38,14 +42,12 @@
 }
 
 .btn {
-	@extend button;
+	@mixin button;
 	padding: 10px 15px;
 	margin-top: 25px;
 }
 
 .dashboard {
-	padding: 50px 25px 25px 25px;
-	text-align: center;
 	h1 { text-transform: uppercase; }
 	h2 { font-weight: 100; }
 	h2 > .account { margin-left: 0.5em; font-weight: 600; }
@@ -60,8 +62,9 @@
 		display: inline-block;
 		min-width: 10em;
 		text-align: right;
+		vertical-align: top;
 	}
-	ul li .value { font-weight: 600; display: inline; }
+	ul li .value { font-weight: 600; display: inline-block; }
 
 
 	.how-to__list { text-align: center; list-style: none; }

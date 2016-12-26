@@ -1,0 +1,6 @@
+@keyframes fadeIn {
+  from { opacity: 0; visibility: hidden; }
+  to { opacity: 1; visibility: visible; }
+}
+
+.fadeIn { animation-name: fadeIn; }

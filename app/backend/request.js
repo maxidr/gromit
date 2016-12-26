@@ -2,12 +2,13 @@ const m = require('mithril')
 const session = require('../../lib/session')
 const merge = require('ramda/src/merge')
 
-const serverUrl = 'https://app.gromit.io'
+const serverUrl = require('./serverUrl')
+window.serverUrl = serverUrl
 
 const unwrapError = (response, xhr) => ({ type: 'service', code: xhr.status, error: response })
 
 function addAuthorization(xhr){
-  if( session() && session().token ){ xhr.setRequestHeader('Authorization', 'Bearer ' + session().token) }
+  if( session() && session().token ){ xhr.setRequestHeader('Authorization', 'bearer ' + session().token) }
 }
 
 
@@ -27,7 +28,7 @@ function addAuthorization(xhr){
  * 
  */
 module.exports = (method, path, more) => m.request(
-  merge({ method: method, url: serverUrl + path,
+  merge({ method: method, url: serverUrl() + path,
     unwrapError: unwrapError, config: addAuthorization },
     more || {})
 )

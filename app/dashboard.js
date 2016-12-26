@@ -232,14 +232,10 @@ function loadClipboard(element, isInitialized){
 	}
 }
 
-dashboard.view = (ctrl) => {
-	return m('.fullscreen-content', { config: loadClipboard }, [
-		header(),
-		m('.content.dashboard',[
-			ctrl.user() ? renderInfo(ctrl) : m(spinner)
-		])
-	])
-}
+dashboard.view = ctrl => m('.dashboard.txt-ac', { config: loadClipboard }, [
+	ctrl.user() ? renderInfo(ctrl) : m(spinner)
+])
+
 
 
 export default dashboard;

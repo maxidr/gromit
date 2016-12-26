@@ -1,16 +1,16 @@
 const m = require('mithril')
 
-window.m = m
-//require('./index.css')
-var icons = require('./css/icons.css')
+require('./css/index.css')
+//require('./css/icons.css')
 //var css = require('./css/app.css')
-var css = require('./css/base.css')
+//require('./css/base.css')
 
 // Landing page style. See: http://maps.stamen.com/
 require('./app/tile.stamen')
 
 import session from './lib/session'
 
+import layout from './app/layout'
 import login from './app/auth/login'
 import forgotPassword from './app/auth/forgotPassword'
 import register from './app/auth/register'
@@ -18,19 +18,19 @@ import dashboard from './app/dashboard'
 import logout from './app/logout'
 import changePlan from './app/dashboard/plans'
 
-import complement from 'ramda/src/complement'
-import merge from 'ramda/src/merge'
+const complement = require('ramda/src/complement')
+const merge = require('ramda/src/merge')
 
 
-const isLogged = () => session() && session().token
+const isLogged = () => (session() || {}).token
 const isNotLogged = complement(isLogged)
 const emptyView = { view: () => '' }
 
 const redirect = require('./lib/route-helpers').redirect
 const routes = merge(
 	redirect(isNotLogged, '/login', {
-    '/change-plan': changePlan,
-		'/': dashboard,
+    '/change-plan': m(layout, changePlan),
+		'/': m(layout, dashboard),
 	  '/logout': logout
 	}),
 	redirect(isLogged, '/', {

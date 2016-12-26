@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "webpack-dev-server --colors",
-    "build": "webpack --config webpack.config.prod.js",
+    "build": "webpack --config webpack.config.prod.js -p",
     "//": "node composition | faucet",
     "test": ""
   },
@@ -33,15 +33,16 @@
     "style-loader": "0.13.0",
     "tape": "4.5.0",
     "url-loader": "0.5.7",
-    "webpack": "1.12.14",
-    "webpack-dev-server": "1.14.1"
+    "webpack": "1.14.0",
+    "webpack-dev-server": "1.16.2"
   },
   "dependencies": {
     "clipboard": "1.5.10",
+    "date-fns": "1.21.1",
     "json-formatter-js": "1.0.0",
     "m-validator": "1.0.0",
     "mithril": "0.2.5",
     "mithril-validator": "1.1.0",
-    "ramda": "0.21.0"
+    "ramda": "0.22.1"
   }
 }

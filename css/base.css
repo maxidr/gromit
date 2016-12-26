@@ -6,7 +6,7 @@
 }
 
 :focus {
-    outline: none;
+  outline: none;
 }
 
 html, body{ height: 100%; }
@@ -31,3 +31,21 @@ body {
   -webkit-overflow-scrolling: touch;
   min-width: 400px;
 }
+
+.txt-ac { text-align: center; }
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.bg-semitransparent {
+  background: rgba(0,0,0,0.5);
+}
+
+.full-center {
+  position: relative;
+  top: 50%;
+}
+
+
