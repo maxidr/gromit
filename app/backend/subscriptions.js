@@ -146,7 +146,21 @@ module.exports = {
   subscribe: (planId, paymentGateway = 'paypal') => request('POST', '/users/current/subscription', {
     background: true,
     data: { planId, paymentGateway } 
-  })
+  }),
+
+  // POST /users/current/subscription/suspend
+  // Response: 
+  //  { subscription: {... status: 'suspended', ...}, projectPlan: {...} }
+  // 
+  // If already suspended, response with status code 409
+  // 
+  suspendCurrent: () => request('POST', '/users/current/subscription/suspend', { background: true }),
+
+  // POST /users/current/subscription/resume
+  resumeCurrent: () => request('POST', '/users/current/subscription/resume'),
+  
+  // POST /users/current/subscription/cancel
+  cancelCurrent: () => request('POST', '/users/current/subscription/cancel'),
 }
 
 

@@ -51,7 +51,7 @@ GET /users/plans
       }, ....
     ]
 
-GET /users/current/subcription
+GET /users/current/subscription
     + 200
     + 404 Not found - When the user not have any plan yet
 
@@ -59,10 +59,10 @@ POST /users/current/subscription
     body: { planId: string, paymentGateway: 'paypal' | 'custom' }
     + status 409 when already had been suspended
 
-POST /users/current/subcription/suspend
-POST /users/current/subcription/resume
-POST /users/current/subcription/cancel
-GET /users/current/subcription/history
+POST /users/current/subscription/suspend
+POST /users/current/subscription/resume
+POST /users/current/subscription/cancel
+GET /users/current/subscription/history
 
 ### Enable local account
 

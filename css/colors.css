@@ -1,0 +1,8 @@
+$red: #fc2940;
+$gray: #404040;
+
+.red { color: $red; }
+.bg-red { background-color: $red; }
+
+.gray { color: $gray; }
+.gb-gray { background-color: $gray; }

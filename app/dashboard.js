@@ -1,6 +1,7 @@
 import m from 'mithril';
 const user = require('./backend/users')
 const subscriptions = require('./backend/subscriptions')
+const { isStatus, planType } = require('./backend/subscription.helpers')
 const subscriptionView = require('./dashboard/subscriptionView')
 
 const session = require('../lib/session')
@@ -9,6 +10,7 @@ const Clipboard = require('clipboard')
 
 const when = require('ramda/src/when')
 const identity = require('ramda/src/identity')
+const unless = require('ramda/src/unless')
 
 import originListView from './dashboard/originListView'
 import ipListView from './dashboard/ipListView'
@@ -44,7 +46,13 @@ const copyToClipboardClicked = (() => {
 	}
 })()
 
-
+function updateSubscriptionState(subscription, action){
+	subscription(undefined)
+	m.redraw()
+	return subscriptions[action]()
+		.then(subscription)
+		.then(m.redraw)
+}
 
 dashboard.controller = function() {
 	const ctrl = {}
@@ -55,6 +63,13 @@ dashboard.controller = function() {
 	ctrl.serviceResponse = m.prop()
 	ctrl.originListView = originListView(ctrl.user)
 	ctrl.ipListView = ipListView(ctrl.user)
+
+	ctrl.subscriptionActions = {
+		suspendCurrentPlan: () => updateSubscriptionState(ctrl.subscription, 'suspendCurrent'),
+		resumeCurrentPlan:  () => updateSubscriptionState(ctrl.subscription, 'resumeCurrent'),
+		cancelCurrentPlan:  () => updateSubscriptionState(ctrl.subscription, 'cancelCurrent')
+			.then(() => session({ subscription: null }))
+	}
 
 	user.fetch()
 		.then(ctrl.user)
@@ -67,12 +82,11 @@ dashboard.controller = function() {
 		.then(() => {
 			subscriptions.current()
 				.then(ctrl.subscription)
-				.then(subscription => session({ 
-						subscription: {
-							type: subscription.projectPlan.type
-						}
+				.then(subscription => {
+					session({ subscription: 
+						isStatus('cancelled', subscription) ? null : { type: planType(subscription) }
 					})
-				)
+				})
 				.catch(() => ctrl.subscription(null))
 				.then(m.redraw)
 
@@ -170,6 +184,7 @@ const examplesView = ( user, serviceResponse ) => m('.how-to', [
 ])
 
 
+
 const renderInfo = ctrl => {
 	const user = ctrl.user()
 	const serviceResponse = ctrl.serviceResponse()
@@ -183,7 +198,10 @@ const renderInfo = ctrl => {
 			m('li', [ 
 				m('.label', 'Plan'), 
 				m('.value',
-					m(subscriptionView, ctrl.subscription())
+					m(subscriptionView, { 
+						actions: ctrl.subscriptionActions, 
+						currentSubscription: ctrl.subscription() 
+					})
 				) 
 			]),
 			m('li', [ m('.label', 'Already used'), m('.value', formatNumber(user.usages, '.')) ])
@@ -208,14 +226,6 @@ function formatNumber(number, separator) {
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
-const header = () => m('header.header-primary', [
-	m('.container', [
-		m('.logo', [ 'Gromit', m('b', '.io') ]),
-		m('ul.menu', [
-			m('li', m('a[href="/logout"]', { config: m.route }, 'Logout'))
-		])
-	])
-])
 
 function loadClipboard(element, isInitialized){
 	if( ! isInitialized ){

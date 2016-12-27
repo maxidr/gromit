@@ -4,13 +4,19 @@ const spinner = require('../ui/spinner')
 const overlay = require('../ui/overlay')
 const session = require('../../lib/session')
 const when = require('../ui/when')
-const identity = require('ramda/src/identity')
+const both = require('ramda/src/both')
 
 const fetchCurrentSubscription = require('../backend/subscriptions').current
+const isStatus = require('../backend/subscription.helpers').isStatus
 
 require('./styles.css')
 
-const areSameType = (one, another) => one.type === another.type
+const isNotCancelled = subscription => isStatus('cancelled', subscription)
+const areSameType = both(
+  isNotCancelled,
+  // compare types
+  (one, another) => one.type === another.type
+)
 
 function showListOfPlans(plans, subscription, changePlan){
   return m('.columns', 
@@ -62,7 +68,6 @@ function controller(){
   return { showSpinner, plans, changePlan, subscription }
 }
 
-const showOverlayWhen = when(identity, () => m(overlay))
 
 function view({ showSpinner, plans, changePlan, subscription }){
   return m('div',[

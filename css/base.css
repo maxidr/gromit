@@ -52,4 +52,6 @@ strong {
   top: 50%;
 }
 
+.sm-font-size { font-size: .8em; }
 
+.sm-margin-left { margin-left: 1em; }

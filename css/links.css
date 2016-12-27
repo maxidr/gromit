@@ -1,0 +1,25 @@
+.link, .link-small {
+  text-transform: uppercase;
+  border: 0;
+  background: transparent;
+  font-family: 'Montserrat', Helvetica, sans-serif;
+  display: inline-block;
+}
+
+.link-small {
+  padding: 0 5px;
+  font-size: .8em;
+}
+
+.link {
+  padding: 0 5px 8px 5px;
+  font-size: 1em;
+}
+
+.link-small:hover, .link:hover, 
+.link-small:focus, .link:focus, 
+.link-small:active, .link:active {
+  border-bottom: 4px solid $red;
+  cursor: pointer;
+  color: black;
+}

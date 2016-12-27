@@ -3,7 +3,7 @@ const styles = require('../subscriptionView.css')
 
 const { 
   usageLimit, creationDate, amount, currency, 
-  period, isPending, approveUrl 
+  period, isStatus, approveUrl 
 } = require('../../backend/subscription.helpers')
 
 const price = data => `${amount(data).toLocaleString()} ${currency(data)} by ${period(data)}`
@@ -13,7 +13,7 @@ function vm(data){
     startedAt: creationDate(data).toLocaleDateString(),
     usageLimit: usageLimit(data).toLocaleString(),
     price: price(data),
-    isPending: isPending(data),
+    isPending: isStatus('pending', data),
     approveUrl: approveUrl(data)
   }
 }
