@@ -1,0 +1,1 @@
+module.exports = (condition, onTrue) => condition ? onTrue() : ''

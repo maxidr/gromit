@@ -144,6 +144,7 @@ module.exports = {
    *    
    */
   subscribe: (planId, paymentGateway = 'paypal') => request('POST', '/users/current/subscription', {
+    background: true,
     data: { planId, paymentGateway } 
   })
 }

@@ -12,6 +12,7 @@ const TRIAL_TERM_DAYS = 30
 const remainingDays = endDate => differenceInDays(endDate, new Date())
 const creationDate = memoize(pipe(path(['subscription', 'createdTime']), timestamp => new Date(timestamp)))
 
+
 /**
  * Subscription map helpers
  */
