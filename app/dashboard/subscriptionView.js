@@ -5,6 +5,7 @@ const styles = require('./subscriptionView.css')
 
 const conditions = require('ramda/src/cond')
 
+const { planType, planName } = require('../backend/subscription.helpers')
 
 const waiting             = subscription => subscription === undefined
 const withoutSubscription = subscription => subscription === null
@@ -22,11 +23,11 @@ const selector = conditions([
 ])
 
 function withSubscriptionView(data){
-  const { view, viewModel } = resolveDetailsView(data.projectPlan.type)
+  const planDetails = resolveDetailsView(planType(data))
 
   return m(`div.${styles.planInfo}`, [ 
-    m('div', data.projectPlan.name),
-    view(viewModel(data)),
+    m('div', planName(data)),
+    m(planDetails, planDetails.vm(data)),
     m(`a.${styles.subscriptionBtn}`, { onclick: e => m.route('/change-plan') }, 'change plan')
   ])
 }

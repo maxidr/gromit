@@ -1,22 +1,9 @@
 const m = require('mithril')
 
+const { usageLimit, creationDate, remainingDays } = require('../../backend/subscription.helpers')
+
 const equals = require('ramda/src/equals')
 const conditions = require('ramda/src/cond')
-const memoize = require('ramda/src/memoize')
-const path = require('ramda/src/path')
-const pipe = require('ramda/src/pipe')
-const pathOr = require('ramda/src/pathOr')
-
-const differenceInDays = require('date-fns/difference_in_days')
-const addDays = require('date-fns/add_days')
-
-const TRIAL_TERM_DAYS = 30
-const usageLimit = pathOr(0, ['projectPlan', 'usageLimit'])
-const creationDate = memoize(pipe(path(['subscription', 'createdTime']), timestamp => new Date(timestamp)))
-
-function remainingDays(endDate){
-  return differenceInDays(endDate, new Date())
-}
 
 const lessThan = reference => amount => amount < reference
 const moreThan = reference => amount => amount > reference
@@ -29,22 +16,20 @@ const remainingTimeMessage = conditions([
   [ moreThan(1),   days => `Remaining ${days} days` ]
 ])
 
-module.exports = { view, viewModel }
+module.exports = { view, vm }
 
-function viewModel(data){
+function vm(data){
   return {
     startedAt: creationDate(data).toLocaleDateString(),
-    remainingDays: pipe(creationDate, date => addDays(date, TRIAL_TERM_DAYS), remainingDays)(data),
+    remainingDays: remainingDays(data),
     usageLimit: usageLimit(data).toLocaleString()
   }
 }
 
-function view(vm){
-  return [
-    m('ol.plan-details', [
-      m('li', `Started on ${vm.startedAt}`),
-      m('li', remainingTimeMessage(vm.remainingDays)),
-      m('li', `Usage limit: ${vm.usageLimit} request by month`)
-    ])
-  ]
+function view(_, vm){
+  return m('ol.plan-details', [
+    m('li', `Started on ${vm.startedAt}`),
+    m('li', remainingTimeMessage(vm.remainingDays)),
+    m('li', `Usage limit: ${vm.usageLimit} request by month`)
+  ])
 }
