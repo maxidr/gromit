@@ -18,6 +18,7 @@ import register from './app/auth/register'
 import dashboard from './app/dashboard'
 import logout from './app/logout'
 import changePlan from './app/changePlan'
+const start = require('./app/auth/start')
 
 const complement = require('ramda/src/complement')
 const merge = require('ramda/src/merge')
@@ -38,6 +39,7 @@ const routes = merge(
     '/login': login,
     '/forgot-password': forgotPassword,
     '/register': register,
+    '/start/:signupHash': start
   })
   // TODO: add -> https://app.gromit.io/#/start/{signup-token}
   // With this, call to API (delay 10 or 15 seconds, so show an spinner)
