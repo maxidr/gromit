@@ -37,6 +37,7 @@
     "webpack-dev-server": "1.16.2"
   },
   "dependencies": {
+    "autotrack": "1.0.3",
     "clipboard": "1.5.10",
     "date-fns": "1.21.1",
     "json-formatter-js": "1.0.0",

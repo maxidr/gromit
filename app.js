@@ -27,6 +27,7 @@ const isLogged = () => (session() || {}).token
 const isNotLogged = complement(isLogged)
 const emptyView = { view: () => '' }
 
+
 const redirect = require('./lib/route-helpers').redirect
 const routes = merge(
   redirect(isNotLogged, '/login', {
@@ -61,3 +62,7 @@ function showLandingPageLayout(){
   [ document.getElementById('main'),
     document.getElementById('map-container') ].forEach((el) => el.style.display = '' )
 }
+
+require('autotrack')
+require('autotrack/lib/plugins/clean-url-tracker')
+require('autotrack/lib/plugins/url-change-tracker')
