@@ -1,7 +1,6 @@
 var path = require('path');
 var webpack = require('webpack')
 var fs = require('fs')
-var S3Plugin = require('webpack-s3-plugin')
 
 var ReplacePlugin = require('replace-webpack-plugin');
 
@@ -88,19 +87,7 @@ module.exports = {
         css: '<link type="text/css" rel="stylesheet" href="https://static.gromit.io/assets/[hash]/styles.css">',
         js: '<script src="https://static.gromit.io/assets/[hash]/bundle.js"></script>'
       }
-    }),
-    /*
-    new S3Plugin({
-      s3Options: {
-        accessKeyId: '...',
-        secretAccessKey: '...',
-      },
-      s3UploadOptions: {
-        Bucket: 'static-files-gromit'
-      },
-      directory: 'deployment'
     })
-    */
   ],
 
   node : { fs: 'empty' }
