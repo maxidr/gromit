@@ -85,7 +85,8 @@ module.exports = {
       output: '/deployment/app/index.html',
       data: {
         css: '<link type="text/css" rel="stylesheet" href="https://static.gromit.io/assets/[hash]/styles.css">',
-        js: '<script src="https://static.gromit.io/assets/[hash]/bundle.js"></script>'
+        js: '<script src="https://static.gromit.io/assets/[hash]/bundle.js"></script>',
+        deployDate: `<!-- Last deployment: ${(new Date()).toLocaleString()} -->`
       }
     })
   ],
