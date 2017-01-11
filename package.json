@@ -37,11 +37,9 @@
     "webpack-dev-server": "1.16.2"
   },
   "dependencies": {
-    "autotrack": "1.0.3",
     "clipboard": "1.5.10",
     "date-fns": "1.21.1",
     "json-formatter-js": "1.0.0",
-    "m-validator": "1.0.0",
     "mithril": "0.2.5",
     "mithril-validator": "1.1.0",
     "ramda": "0.22.1"

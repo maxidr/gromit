@@ -9,8 +9,8 @@ var precss = require('precss')
 module.exports = {
   entry: "./app.js",
 
-  //devtool: 'source-map',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
+  //devtool: 'cheap-module-eval-source-map',
   debug: true,
 
   output: {
