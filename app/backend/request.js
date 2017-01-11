@@ -3,6 +3,7 @@ const session = require('../../lib/session')
 const merge = require('ramda/src/merge')
 const pipe = require('ramda/src/pipe')
 const when = require('ramda/src/when')
+const both = require('ramda/src/both')
 
 const trace = function(label){
   return function(obj){
@@ -14,12 +15,14 @@ const trace = function(label){
 const serverUrl = require('./serverUrl')
 
 const unwrapError = (response, xhr) => {
-  return ({ type: 'service', code: xhr.status, error: response })
+  return { type: 'service', code: xhr.status, error: response }
 }
 
 const isForbidden = error => error.code === 403
+const isLogged = () => (session() || {}).token
 
-const redirectOnForbidden = when(isForbidden, () => { 
+// TODO: Wrong. I use bussiness login in simple request function.  Remote to another function and compose both
+const redirectOnForbidden = when(both(isForbidden, isLogged), () => { 
   session(null)
   m.route('/login')
 })
@@ -45,7 +48,9 @@ function addAuthorization(xhr){
  * 
  */
 module.exports = (method, path, more) => m.request(
-  merge({ method: method, url: serverUrl() + path,
-    unwrapError: pipe(unwrapError, trace('Request error: '), redirectOnForbidden), config: addAuthorization },
-    more || {})
+  merge({ 
+    method: method, url: serverUrl() + path,
+    unwrapError: pipe(unwrapError, trace('Request error: '), redirectOnForbidden), 
+    config: addAuthorization 
+  }, more || {})
 )
