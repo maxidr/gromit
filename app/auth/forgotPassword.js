@@ -4,6 +4,7 @@ const constraints = require('../../lib/promisedValidator')
 const pipe = require('ramda/src/pipeP')
 const backend = require('../backend/users')
 const focus = require('../ui/focusOnField')
+const closeBtn = require('../closeBtn')
 
 require('./index.css')
 
