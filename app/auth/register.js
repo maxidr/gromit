@@ -48,11 +48,16 @@ register.controller = function(){
   return ctrl
 }
 
-const successView = (email) => m('.success-register.content', [
-  m('h1', 'Perfect, now you are registered!'),
-  m('h2', 'In short you will receive an email in your account (' + email + ') with the next steps to access to your dashboard'),
-  m("a[href='/login']", { config: m.route }, 'Go back to the login page')
-])
+const successView = email => {
+  ga('set', 'page', '/register/success')
+  ga('set', 'userId', email)
+  ga('send', 'pageView')
+  return m('.success-register.content', [
+    m('h1', 'Perfect, now you are registered!'),
+    m('h2', 'In short you will receive an email in your account (' + email + ') with the next steps to access to your dashboard'),
+    m("a[href='/login']", { config: m.route }, 'Go back to the login page')
+  ])
+}
 
 const formView = (ctrl) => m('.auth.register', [
   m('h1.auth__title', 'Register'),
