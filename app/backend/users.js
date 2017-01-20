@@ -18,7 +18,6 @@ users.resetPassword  = user => request('POST', '/users/reset', emailAndPassword(
 users.logout         = user => request('DELETE', '/users/current')
 users.update 				 = user => request('PUT', '/users/current', { data: user })
 users.fetch          = () => {
-	console.log('fetch user')
 	return request('GET', '/users/current', { background: true })
 /*
 	const deferred = m.deferred();

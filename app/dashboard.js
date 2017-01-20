@@ -5,12 +5,14 @@ const { isStatus, planType } = require('./backend/subscription.helpers')
 const subscriptionView = require('./dashboard/subscriptionView')
 
 const session = require('../lib/session')
-import { page as spinner } from './ui/spinner'
+import { page as spinner, inline as inlineSpinner } from './ui/spinner'
 const Clipboard = require('clipboard')
 
 const when = require('ramda/src/when')
 const identity = require('ramda/src/identity')
 const unless = require('ramda/src/unless')
+const propOr = require('ramda/src/propOr')
+
 
 import originListView from './dashboard/originListView'
 import ipListView from './dashboard/ipListView'
@@ -20,6 +22,7 @@ require('./dashboard.css')
 import JSONFormatter from 'json-formatter-js'
 
 
+/*
 m.deferred.onerror = function(e) {
 	const { message, stack } = e || {}
 	if( message ){ 
@@ -28,6 +31,7 @@ m.deferred.onerror = function(e) {
 	}
 	return e
 }
+*/
 
 
 const dashboard = {}
@@ -54,6 +58,21 @@ function updateSubscriptionState(subscription, action){
 		.then(m.redraw)
 }
 
+
+function mustShowEndpoint(user){
+	return ! propOr(false, 'route53ChangePending', user)
+}
+
+
+function apiConfigIsWaiting(){
+	return m('.how-to', [
+		m('h2.how-to__title', 'Please wait while your API key is starting up'),
+		m(inlineSpinner),
+		m('.how-to__sub-title', 'This must not take than a minute')
+	])
+}
+
+
 dashboard.controller = function() {
 	const ctrl = {}
 
@@ -75,9 +94,8 @@ dashboard.controller = function() {
 		.then(ctrl.user)
 		.then(m.redraw)
 		.catch(() => {
-			console.log('Fetch user fails, redirect to home /');
 			session(null)
-			m.route('/')
+			m.route('/login')
 		})
 		.then(() => {
 			subscriptions.current()
@@ -87,12 +105,15 @@ dashboard.controller = function() {
 						isStatus('cancelled', subscription) ? null : { type: planType(subscription) }
 					})
 				})
-				.catch(() => ctrl.subscription(null))
+				.catch(() => { 
+					console.log('Fetch subscription fails')
+					ctrl.subscription(null)
+				})
 				.then(m.redraw)
 
 		})
 		.then(() => {
-			const user = ctrl.user()
+			const user = ctrl.user() || {}
 			return m.request({ 
 					method: 'GET', url: 'https://' + user.projectKey + '.gromit.io/api', background: true
 				})
@@ -102,6 +123,21 @@ dashboard.controller = function() {
 					console.error("Fail when try to use the api with the user's key")
 				})
 		})
+		.then(() => {
+			if( ! mustShowEndpoint(ctrl.user()) ){
+				const polling = setInterval(() => {
+					user.fetch()
+						.then(ctrl.user)
+						.then(() => {
+							if( mustShowEndpoint(ctrl.user()) ){
+								clearInterval(polling)
+								m.redraw()
+							}
+						})
+				}, 1000)
+			}
+		})
+
 
 	return ctrl
 }
@@ -170,19 +206,20 @@ const examplesView = ( user, serviceResponse ) => m('.how-to', [
 		jqueryExample(user.projectKey)
 	]),
 	m('form', { action: 'https://jsbin.com?js,console', method: 'POST', target: '_blank' }, [
-		m('input[type=hidden]', { name: 'javascript', value: '$.get("https://' + user.projectKey + '.gromit.io/api").then(function(response){\n\tconsole.log(response.location)\n})' }),
+		m('input[type=hidden]', { name: 'javascript', value: '$.get("https://' + user.projectKey + '.gromit.io/api").then(function(response){\n\tconsole.log(response)\n})' }),
 		m('input[type=hidden]', { name: 'html', value: '<!DOCTYPE html>\n<html>\n<head>\n<script src="https://code.jquery.com/jquery-2.1.4.js"></script>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width">\n<title>JS Bin</title>\n</head>\n<body>\n</body>\n</html>' }),
 		m('button[type=submit].btn', 'Show in JSBin')
 	]),
 	when(identity, 
-		() => m('.json-result', [
-			m('h2.result-example', 'Service response example'),
-			m('div', { config: renderJSON(serviceResponse) })
-		])(serviceResponse)
-	)
+		serviceResponse => { 
+			return m('.json-result', [
+				m('h2.result-example', 'Service response example'),
+				m('div', { config: renderJSON(serviceResponse) })
+			])
+		}
+	)(serviceResponse)
 	
 ])
-
 
 
 const renderInfo = ctrl => {
@@ -210,7 +247,8 @@ const renderInfo = ctrl => {
 			{
 				title: 'Examples',
 				visible: true,
-				body: examplesView(user, serviceResponse)
+				body: mustShowEndpoint(user) ? examplesView(user, serviceResponse) : apiConfigIsWaiting()
+				//body: examplesView(user, serviceResponse)
 			},{
 				title: 'Origin list',
 				body: originListView(user.originList)
