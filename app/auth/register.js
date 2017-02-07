@@ -60,17 +60,18 @@ const successView = email => {
 }
 
 const formView = (ctrl) => m('.auth.register', [
-  m('h1.auth__title', 'Register'),
+  m('h1.auth__title', 'Create your account'),
+  m('h1.auth__sub-title', 'to start your trial period'),
   m('.auth__service-errors', ctrl.errors('service')),
   m('form', { onsubmit: ctrl.submit }, [
     m('.auth__field', [
-      m('label.auth__field__label', 'Email'),
+      m('label.auth__field__label', 'Your e-mail'),
       m('input[type=email].auth__field__input',
 				{ onchange: m.withAttr('value', ctrl.user.email), config: focus }),
       ctrl.errors('email')
     ]),
     m('.auth__field', [
-      m('label.auth__field__label', 'Password'),
+      m('label.auth__field__label', 'Create a password'),
       m('input[type=password].auth__field__input', { onchange: m.withAttr('value', ctrl.user.password) }),
       ctrl.errors('password')
     ]),
@@ -79,7 +80,8 @@ const formView = (ctrl) => m('.auth.register', [
       m('input[type=password].auth__field__input', { onchange: m.withAttr('value', ctrl.user.retypedPassword) }),
       ctrl.errors('retypedPassword')
     ]),
-    m('button[type=submit].auth__submit', 'Create my user'),
+    m('button[type=submit].auth__submit', 'Create my account'),
+    m('.auth__trial-hint', 'Start your FREE trial for 30 days. No credit card required'),
 		m('.auth__more-options', [
       m('div', m('a.more-options__login', { href: '#/login' }, "I already have an account"))
   	])

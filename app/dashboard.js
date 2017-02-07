@@ -208,7 +208,12 @@ const examplesView = ( user, serviceResponse ) => m('.how-to', [
 	m('form', { action: 'https://jsbin.com?js,console', method: 'POST', target: '_blank' }, [
 		m('input[type=hidden]', { name: 'javascript', value: '$.get("https://' + user.projectKey + '.gromit.io/api").then(function(response){\n\tconsole.log(response)\n})' }),
 		m('input[type=hidden]', { name: 'html', value: '<!DOCTYPE html>\n<html>\n<head>\n<script src="https://code.jquery.com/jquery-2.1.4.js"></script>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width">\n<title>JS Bin</title>\n</head>\n<body>\n</body>\n</html>' }),
-		m('button[type=submit].btn', 'Show in JSBin')
+		m('button[type=submit].btn', 'Show in JSBin'),
+		m('.doc-hint', [
+			'Check out the api ',
+			m('a[href="http://docs.gromit.io/"].link-small', { target: '_blank' }, 'Documentation'),
+			' for more details'
+		])
 	]),
 	when(identity, 
 		serviceResponse => { 

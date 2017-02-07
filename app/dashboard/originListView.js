@@ -27,6 +27,7 @@ export default function(user){
 	return editableList({
 		title: 'Origin configured list',
 		//explanation: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et faucibus metus. Donec pulvinar varius nisl, ac feugiat magna vestibulum eu. Nunc tincidunt scelerisque nibh vel bibendum. Curabitur ipsum dolor, ornare id elit id, varius efficitur nunc. Sed ut velit turpis. Nulla eget rutrum nulla, vel viverra dolor. Phasellus aliquet finibus imperdiet. Fusce tellus nunc, tempus sit amet massa in, malesuada congue risus.,',
+		explanation: "All request where it's Origin header ends with any string on this list will be allowed. So if you add example.com the headers example.com and subdomain.example.com would be allowed",
 		itemName: 'Origin URL',
 		inputPlaceholder: 'Enter an URL',
 

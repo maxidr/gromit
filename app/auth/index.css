@@ -23,6 +23,21 @@
 
 }
 
+.auth__title {
+  line-height: 2.5rem;
+}
+
+.auth__sub-title {
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+
+.auth__trial-hint {
+  font-size: .9rem;
+  margin-top: .9rem;
+}
+
 
 .auth__field > .error { text-align: left; }
 

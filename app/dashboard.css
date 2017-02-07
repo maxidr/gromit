@@ -175,5 +175,17 @@
 		text-transform: uppercase;
 	}
 
+	.doc-hint {
+		margin-bottom: 3rem;
+		font-size: .9rem;
+		margin-top: .9rem;
+		> .link-small {
+			color: black;
+			text-transform: uppercase;
+		}
+	}
+
+
+
 }
 

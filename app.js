@@ -42,10 +42,10 @@ const routes = trackPageView(merge(
     '/subscription': { controller: () => m.route('/') }
   }),
   redirect(isLogged, '/', {
-    '/login': login,
-    '/forgot-password': forgotPassword,
-    '/register': register,
-    '/start/:signupHash': start
+    '/login': m(layout, login),
+    '/forgot-password': m(layout, forgotPassword),
+    '/register': m(layout, register),
+    '/start/:signupHash': m(layout, start)
   })
 ))
 
