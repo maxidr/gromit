@@ -68,7 +68,7 @@ function apiConfigIsWaiting(){
 	return m('.how-to', [
 		m('h2.how-to__title', 'Please wait while your API key is starting up'),
 		m(inlineSpinner),
-		m('.how-to__sub-title', 'This must not take than a minute')
+		m('.how-to__sub-title', "This won't take more than a minute")
 	])
 }
 

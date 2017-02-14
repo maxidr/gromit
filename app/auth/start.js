@@ -4,7 +4,7 @@ const backend = require('../backend/users')
 const session = require('../../lib/session')
 
 function saveTokenOnSession(response){
-  session({ token: response.token })
+  if( response && response.token ) session({ token: response.token })
   return response
 }
 
