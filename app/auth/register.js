@@ -41,6 +41,12 @@ register.controller = function(){
     return false
   }
 
+  ctrl.showPasswordField = false
+
+  ctrl.togglePasswordField = () => {
+    ctrl.showPasswordField = ! ctrl.showPasswordField
+  }
+
   return ctrl
 }
 
@@ -68,10 +74,16 @@ const formView = (ctrl) => m('.auth.register', [
     ]),
     m('.auth__field', [
       m('label.auth__field__label', 'Create a password'),
-      m('input[type=password].auth__field__input', { 
+      m(`input[type=${ ctrl.showPasswordField ? 'text' : 'password' }].auth__field__input`, { 
         onchange: m.withAttr('value', ctrl.user.password),
         placeholder: '4 characters or more'
       }),
+      m('a.see-password',
+        { onclick: ctrl.togglePasswordField },[
+          m('span.hint', ctrl.showPasswordField ? 'hide password' : 'show password'),
+          m('i.icon-eye', { class: ctrl.showPasswordField ? 'icon-eye-blocked' : 'icon-eye' })
+        ]
+      ),
       ctrl.errors('password')
     ]),
     m('button[type=submit].auth__submit', 'Create my account'),

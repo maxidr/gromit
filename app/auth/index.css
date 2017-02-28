@@ -41,7 +41,7 @@
 
 .auth__field > .error { text-align: left; }
 
-.auth__field { margin-bottom: 15px; }
+.auth__field { margin-bottom: 15px; position: relative; }
 
 .auth__field__label {
 	display: block;
@@ -106,4 +106,41 @@
 .more-options__login:focus {
 	border-bottom: 5px solid $red;
 	color: #000;
+}
+
+.auth__field__input:before {
+/* .wrapper-for-icon:before { */
+  font-family: 'icomoon';
+  position: relative;
+  left: -5px;
+  content: "\e9ce";
+}
+
+.see-password {
+  display: inline;
+  /* float: right; */
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  padding: .6rem 1rem .5rem 2rem;
+}
+
+.see-password > .hint {
+  font-weight: 100;
+  font-size: 12px;
+  color: gray;
+  margin-right: 5px;
+  visibility: hidden; opacity: 0;
+}
+
+.see-password:hover > .hint {
+  visibility: visible; opacity: 1;
+}
+
+.hidden { visibility: hidden; opacity: 0; }
+.visible { visibility: visible; opacity: 1; }
+
+.see-password > i {
+  top: 3px;
+  position: relative;
 }
