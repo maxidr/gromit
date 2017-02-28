@@ -9,10 +9,7 @@ const validate = constraints((user, errors) => {
   if( ! user.email() ){ errors('email', 'The email is required') }
   if( ! user.password() ){ errors('password', 'The password is required') }
   else {
-    if( ! user.retypedPassword() ){ errors('retypedPassword', 'Please, retype the password') }
-    else if( user.retypedPassword() !== user.password() ) {
-      errors('retypedPassword', 'the password not match')
-    }
+    if( user.password().length < 4 ){ errors('password', 'Should be 4 characters at least') }
   }
 })
 
@@ -23,8 +20,7 @@ register.controller = function(){
   const ctrl = {};
   ctrl.user = {
     email: m.prop(''),
-    password: m.prop(''),
-    retypedPassword: m.prop('')
+    password: m.prop('')
   }
 
   ctrl.showSuccessMsg = m.prop(false)
@@ -61,7 +57,7 @@ const successView = email => {
 
 const formView = (ctrl) => m('.auth.register', [
   m('h1.auth__title', 'Create your account'),
-  m('h1.auth__sub-title', 'to start your trial period'),
+  m('h1.auth__sub-title', 'Start your FREE trial for 30 days. No credit card required'),
   m('.auth__service-errors', ctrl.errors('service')),
   m('form', { onsubmit: ctrl.submit }, [
     m('.auth__field', [
@@ -72,16 +68,13 @@ const formView = (ctrl) => m('.auth.register', [
     ]),
     m('.auth__field', [
       m('label.auth__field__label', 'Create a password'),
-      m('input[type=password].auth__field__input', { onchange: m.withAttr('value', ctrl.user.password) }),
+      m('input[type=password].auth__field__input', { 
+        onchange: m.withAttr('value', ctrl.user.password),
+        placeholder: '4 characters or more'
+      }),
       ctrl.errors('password')
     ]),
-    m('.auth__field', [
-      m('label.auth__field__label', 'Retype your password'),
-      m('input[type=password].auth__field__input', { onchange: m.withAttr('value', ctrl.user.retypedPassword) }),
-      ctrl.errors('retypedPassword')
-    ]),
     m('button[type=submit].auth__submit', 'Create my account'),
-    m('.auth__trial-hint', 'Start your FREE trial for 30 days. No credit card required'),
 		m('.auth__more-options', [
       m('div', m('a.more-options__login', { href: '#/login' }, "I already have an account"))
   	])
